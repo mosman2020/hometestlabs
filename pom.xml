@@ -19,7 +19,7 @@
 	<properties>
 		<java.version>8</java.version>
 	</properties>
-
+test
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
