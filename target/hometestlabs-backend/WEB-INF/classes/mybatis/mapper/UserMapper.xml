@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2015-2019 the original author or authors. Licensed under the 
+	Apache License, Version 2.0 (the "License"); you may not use this file except 
+	in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License. -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hometest.mybatis.mapper.UserMapper">
+
+	<select id="isUserExists" resultType="int">
+		select count(user_id) from users
+		where
+		user_name=#{username}
+	</select>
+	<select id="getUserByUsername" resultMap="userMap" resultOrdered="true">
+		select
+		usr.user_id,
+		usr.user_name,
+		usr.is_logged_in,
+		usr.is_deleted,
+		usr.retry_count,
+		usr.prefered_language,
+		usr.user_status,
+		usr.user_type,
+		usr.last_login,
+		prof.first_name,
+		prof.middle_name,
+		prof.family_name,
+		prof.date_birth,
+		prof.gender,
+		prof.mobile,
+		prof.title,
+		prof.is_deleted as
+		"prof_is_deleted",
+		pass.password_value,
+		pass.password_type,
+		pass.expiry_date,
+		pass.is_active
+		from users usr
+		inner join profiles prof on usr.profile_id = prof.profile_id
+		inner join passwords pass on usr.user_id = pass.user_id
+		where
+		usr.user_name = #{userName}
+		and pass.password_type='permanent'
+	</select>
+
+	<resultMap id="userMap" type="com.hometest.mybatis.domain.User">
+		<id property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="loggedIn" column="is_logged_in" />
+		<result property="deleted" column="is_deleted" />
+		<result property="retryCount" column="retry_count" />
+		<result property="preferedLanguage" column="prefered_language" />
+		<result property="userStatus" column="user_status" />
+		<result property="userType" column="user_type" />
+		<result property="lastLogin" column="last_login" />
+		<association property="profile" resultMap="profileMap" />
+		<association property="password" resultMap="passwordMap" />
+	</resultMap>
+	<resultMap id="profileMap" type="com.hometest.mybatis.domain.Profile" >
+		<result property="firstName" column="first_name" />
+		<result property="middleName" column="middle_name" />
+		<result property="familyName" column="family_name" />
+		<result property="gender" column="gender" />
+		<result property="mobile" column="mobile" />
+		<result property="title" column="title" />
+		<result property="dateBirth" column="date_birth" />
+		<result property="deleted" column="prof_is_deleted" />
+	</resultMap>
+	<resultMap id="passwordMap" type="com.hometest.mybatis.domain.UserPassword">
+		<result property="passwordValue" column="password_value" />
+		<result property="passwordType" column="password_type" />
+		<result property="expiryDate" column="expiry_date" />
+		<result property="active" column="is_active" />
+	</resultMap>
+	
+	<insert id="insertUser" useGeneratedKeys="true" parameterType="com.hometest.mybatis.domain.User" keyColumn="user_id" keyProperty="userId">
+		INSERT INTO users (user_name,user_status,user_type,prefered_language,profile_id,created_date,created_by) 
+		values(#{userName},#{userStatus},#{userType},#{preferedLanguage},#{profile.profileId},#{createdDate},#{createdBy})
+	</insert>
+	
+	<insert id="insertUserPassword" parameterType="com.hometest.mybatis.domain.UserPassword">
+		INSERT INTO passwords (password_value,password_type, user_id, is_active, expiry_date,created_date,created_by)
+		values(#{passwordValue}, #{passwordType},#{userId}, #{active,typeHandler=com.hometest.mybatis.handler.YesNoBooleanTypeHandler},#{expiryDate},#{createdDate},#{createdBy})
+	</insert>
+	
+	<insert id="insertUserProfile" parameterType="com.hometest.mybatis.domain.Profile" useGeneratedKeys="true" keyColumn="profile_id" keyProperty="profileId">
+		INSERT INTO profiles (first_name,middle_name,family_name,gender,mobile,title,date_birth,created_date,created_by) 
+		VALUES (#{firstName},#{middleName},#{familyName},#{gender},#{mobile},#{title},#{dateBirth},#{createdDate},#{createdBy})
+	</insert>
+	
+	
+</mapper>

@@ -1,0 +1,12 @@
+{
+    "header": {
+        "statusCode": "E999999",
+        "message": "Internal System Error",
+        "timestamp": "2020-09-26T14:52:31.732+00:00",
+        "requestId": "25043632-15fd-42d7-b139-681d6e61f08d",
+        "backendRequestId": "cf920f89-adb5-455c-937f-8428173544e1",
+        "errors": null,
+        "path": "/CustomerLoginService/v1.0/userLogin"
+    },
+    "body": null
+}
