@@ -10,11 +10,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.hometest</groupId>
-	<artifactId>hometestlabs-gateway</artifactId>
+	<artifactId>hometestlabs-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>HomeLabsTest - Gateway</name>
+	<name>HomeLabsTest - Backend</name>
 	<packaging>war</packaging>
-	<description>gateway of the home test application</description>
+	<description>Home Test Labs Application</description>
 
 	<properties>
 		<java.version>8</java.version>
