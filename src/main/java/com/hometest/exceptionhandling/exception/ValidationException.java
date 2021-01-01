@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
+import com.hometest.utils.ErrorCodes;
 import com.hometest.utils.payload.request.Request;
 
 import lombok.Data;
@@ -21,10 +22,13 @@ import lombok.Data;
 public class ValidationException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;
+	
+	public static String VALIDATION_ERROR = ErrorCodes.VALIDATION_ERROR;
+	
 	@SuppressWarnings("rawtypes")
-	private Set<ConstraintViolation<Request>> constraintViolation;
+	private Set<ConstraintViolation<Object>> constraintViolation;
 
-	public ValidationException(@SuppressWarnings("rawtypes") Set<ConstraintViolation<Request>> constraintViolation) {
+	public ValidationException(@SuppressWarnings("rawtypes") Set<ConstraintViolation<Object>> constraintViolation) {
 		this.constraintViolation = constraintViolation;
 	}
 

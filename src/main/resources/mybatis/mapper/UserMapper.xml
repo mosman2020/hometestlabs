@@ -28,16 +28,22 @@
 		user_name=#{username}
 	</select>
 	
-	<select id="validateOtp" resultMap="passwordMap">
-		select password_id,password_value,retry_count,expiry_date from passwords
+	<select id="isUserExistsByid" resultType="int">
+		select count(user_id) from users
 		where
-		user_id = (select user_id from users where user_name=#{userName})
-		and expiry_date> now()
+		user_id=#{userid}
+	</select>
+	
+	<select id="getUserOtp" resultMap="passwordMap">
+		select * from passwords
+		where
+		user_id = #{userId}
+		and expiry_date > now()
 		order by password_id desc
 		limit 1
 	</select>
-	
-	<select id="getUserByUsername" resultMap="userMap" resultOrdered="true">
+	<!-- 
+<select id="getUserByUsername" resultMap="userMap" resultOrdered="true">
 		select
 		usr.user_id,
 		usr.user_name,
@@ -67,7 +73,33 @@
 		usr.user_name = #{userName}
 		and pass.password_type='permanent'
 	</select>
+	
+	
+	 -->
+	<select id="getUserByUserid" resultMap="userMap" >
+		select *
+			from users usr
+			inner join profiles prof on usr.profile_id = prof.profile_id
+			inner join passwords pass on usr.user_id = pass.user_id
+			where
+			usr.user_id = #{userId}
+			and pass.password_type='permanent'
+	</select>
 
+	<select id="getUserByUsername" resultMap="userMap">
+		select 
+			usr.user_id,
+			usr.user_name,
+			pass.*
+			from users usr
+			inner join passwords pass on usr.user_id = pass.user_id
+			where
+			usr.user_name = #{userName}
+			and pass.password_type='permanent'
+	</select>
+	<resultMap id="userMap2" type="com.hometest.mybatis.domain.User" autoMapping="true">
+		<association property="profile"  javaType="com.hometest.mybatis.domain.Profile" autoMapping="true"/>
+	</resultMap>
 	<resultMap id="userMap" type="com.hometest.mybatis.domain.User">
 		<id property="userId" column="user_id" />
 		<result property="userName" column="user_name" />
@@ -122,14 +154,14 @@
 		profile_id=#{profileId}
 	</update>
 	
-	<update id="saveUserOtp" parameterType="com.hometest.mybatis.domain.User">
+	<insert id="saveUserOtp" useGeneratedKeys="true" keyColumn="password_id" keyProperty="passwordId" parameterType="com.hometest.mybatis.domain.UserPassword">
 		insert into passwords 
 			(user_id,password_value,expiry_date,password_type,created_by,created_date) 
 			values ( 
-				(select user_id from users where user_name=#{userName}),
-				#{password.passwordValue},#{password.expiryDate},#{password.passwordType},
-				#{password.createdBy},#{password.createdDate})
-	</update>
+				#{userId},#{passwordValue},
+				#{expiryDate},#{passwordType},
+				#{createdBy},#{createdDate})
+	</insert>
 	<update id="updateUserLoginDetails">
 		update users
 			set last_login=#{lastLogin},
@@ -175,7 +207,7 @@
 		where
 		password_type='temp'
 		and expiry_date> now()
-		and password_id= (select max(password_id) from passwords where user_id = (select user_id from users where user_name=#{userName}))
+		and password_id= (select max(password_id) from passwords where user_id = #{userid})
 	</update>
 	
 	<update id="expirOtp" parameterType="com.hometest.mybatis.domain.UserPassword">
@@ -196,7 +228,7 @@
 	update users
 		set user_status='A'
 		where
-		user_name=#{userName}
+		user_id=#{userId}
 	</update>
 	
 	<select id="getUserByProfile" resultMap="userMap">

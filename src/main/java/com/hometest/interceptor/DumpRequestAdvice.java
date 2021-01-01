@@ -6,7 +6,9 @@ package com.hometest.interceptor;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,6 +35,7 @@ import com.hometest.service.MessageDumpService;
 import com.hometest.service.MessageService;
 import com.hometest.utils.payload.request.Request;
 import com.hometest.utils.payload.request.RequestHeader;
+import com.hometest.validation.groups.OnLogin;
 
 
 /**
@@ -69,6 +72,32 @@ public class DumpRequestAdvice implements RequestBodyAdvice {
 			Type targetType,
 			Class<? extends HttpMessageConverter<?>> converterType) {
 		
+		HttpServletRequest httpRequest = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+		logger.info("httpRequest:"+httpRequest);
+		
+		Annotation[] annos = parameter.getMethodAnnotations();
+		
+		List<Class<?>> defaultGroupSequence = new ArrayList<>();
+		
+		Class<?>[] groups = {};
+		
+         for(int i=0;i<annos.length;i++)
+          {
+        	 Annotation anno = annos[i];
+        	 if(anno instanceof Validated) {
+	        	 logger.info(" anno.toString() : "+ anno.toString());
+	        	 groups =  ((Validated) anno).value();
+        	 }
+          }
+        
+      		
+	Set<ConstraintViolation<Object>> constraintViolation = validator.validate(body,groups);
+	if (!constraintViolation.isEmpty()) {
+		logger.info("constraintViolation : "+constraintViolation.toString());
+		throw new ValidationException(constraintViolation);
+	}
+	
+		/*
 			HttpServletRequest httpRequest = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 			
 			Request req = (Request) body;
@@ -106,6 +135,8 @@ public class DumpRequestAdvice implements RequestBodyAdvice {
 			logger.info("constraintViolation : "+constraintViolation.toString());
 			throw new ValidationException(constraintViolation);
 		}
+		*/
+		
 		return body;
 	}
 

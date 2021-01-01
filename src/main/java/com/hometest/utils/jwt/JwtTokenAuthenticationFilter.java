@@ -41,6 +41,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 			logger.info("from AuthTokenFilter request : "+request);
 			String jwt = parseJwt(request);
 //			logger.info("jwt:"+jwt);
+			logger.info("jwt : "+jwt);
 			if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
 				String username = jwtUtils.getUserNameFromJwtToken(jwt);
 

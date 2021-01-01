@@ -48,7 +48,7 @@ public class UserManagmentController {
 	UserService userService;
 
 	private Logger logger = LoggerFactory.getLogger(UserManagmentController.class);
-	
+/*	
 	@PostMapping(value = "/generateOTP" )
 	public ResponseEntity<Response> generateOTP(@RequestBody Request<LoginUser> request,  HttpServletRequest httpRequest){
 		logger.info("request {} : "+request);
@@ -64,7 +64,7 @@ public class UserManagmentController {
 	    return ResponseEntity.status(HttpStatus.OK).body(response);
 
 	}
-	
+*/	
 	@PostMapping(value = "/getUserDetails")
 	public ResponseEntity<Response> getByUserName(@RequestBody Request<LoginUser> request, HttpServletRequest httpRequest){
 		 logger.info("request {} : "+request);
@@ -111,10 +111,10 @@ public class UserManagmentController {
 				.requestId(request.getHeader().getRequestId())
 	    		.path(httpRequest.getServletPath())	    		
 	    		.build())
-	    		.body(userService.isUserExists(request.getBody())).build();
+	    		.body(userService.isUserExists(request.getBody().getUserName())).build();
 	    return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-	
+/*	
 	@PostMapping(value = "/verifyUser")
 	public ResponseEntity<Response> verifyUser(@RequestBody Request<LoginUser> request,  HttpServletRequest httpRequest) {
 		logger.info("request {} : "+request);
@@ -131,7 +131,7 @@ public class UserManagmentController {
 	    		.body(result).build();
 	    return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-	
+*/	
 	@PostMapping(value = "/changePassword")
 	public ResponseEntity<Response> changePassword(@RequestBody Request<ChangePassword> request,  HttpServletRequest httpRequest) {
 		logger.info("change password request {} : "+request);

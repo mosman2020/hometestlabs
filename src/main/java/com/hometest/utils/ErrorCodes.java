@@ -71,6 +71,7 @@ public class ErrorCodes {
 	public static final String GENERIC_FAILURE_ERROR = "E100000";
 		public static final String INVALID_JSON_OBJECT = "E100001";
 		public static final String ACCESS_DENIED = "E100002";
+		public static final String NOT_FOUND = "E100003";
 	
 	//CATEGORY-2 VALIDATION ERRORS
 	public static final String VALIDATION_ERROR = "E200000";
@@ -95,6 +96,8 @@ public class ErrorCodes {
 		public static final String USER_LOCKED = "E300106";
 		public static final String USER_PASS_EXPIRED = "E300107";
 		public static final String OLD_NEW_PASSWORD_MATCHED = "E300108";
+		public static final String USER_NOT_EXISTS = "E300109";
+		public static final String NO_DATA_FOUND = "E30110";
 		
 		// LIST OF ORDER MANAGEMENT SERVICE ERRORS (E300200)
 		public static final String NON_PAID_ORDER = "E300201";

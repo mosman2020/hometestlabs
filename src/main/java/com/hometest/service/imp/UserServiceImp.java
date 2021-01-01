@@ -17,6 +17,7 @@ import com.hometest.enums.ChangeMobileStatus;
 import com.hometest.enums.ChangeMobileType;
 import com.hometest.enums.UserStatus;
 import com.hometest.exceptionhandling.exception.BusinessException;
+import com.hometest.model.res.UserData;
 import com.hometest.mybatis.dao.UserDao;
 import com.hometest.mybatis.domain.ChangeMobileRequest;
 import com.hometest.mybatis.domain.ChangePassword;
@@ -37,26 +38,31 @@ public class UserServiceImp implements UserService {
 	@Autowired
 	UserDao userDao;
 	
+	
 	private Logger logger = LoggerFactory.getLogger(UserServiceImp.class);
 
 	@Override
 	public User getByUsername(LoginUser loginUser) {
-		User rsBody = null;
-		try {
-			rsBody = userDao.getUserByUsername(loginUser.getUserName());
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			throw new BusinessException("E000003");
-		}
-		
-		return rsBody;
+		return userDao.getUserByUsername(loginUser.getUserName());
+	}
+	
+	@Override
+	public User getByUserId(Long userid) {
+		if(userDao.isUserExists(userid))
+			throw new BusinessException(ErrorCodes.NO_DATA_FOUND);
+		return userDao.getUserByUserid(userid);
+	}
+	
+	public boolean isUserExists(String username) {
+		int isUserExists = userDao.isUserExists(username);
+		return isUserExists == 1;
 	}
 
 	@Override
 	public User createUser(User user) {
 		logger.info("Create user :" + user);
 		user.setUserStatus(UserStatus.CREATED.getValue());
-		if(!isUserExists(LoginUser.builder().userName(user.getUserName()).build())){
+		if(!isUserExists(user.getUserName())){
 			user.setCreatedBy((long)1);
 			user.setCreatedDate(new Date());
 			user.getPassword().setPasswordType("permanent");
@@ -71,29 +77,21 @@ public class UserServiceImp implements UserService {
 		return user;
 	}
 
-	public boolean isUserExists(LoginUser loginUser) {
-		int isUserExists = userDao.isUserExists(loginUser.getUserName().trim());
-		return isUserExists == 1;
-	}
-
-
 	@Override
-	public LoginUser generateOtp(LoginUser loginUser) {
-
+	public UserPassword generateOtp(Long userid) {
+		 if(!userDao.isUserExists(userid))
+			 throw new BusinessException(ErrorCodes.USER_NOT_EXISTS);
 		 int randomPin   =(int) (Math.random()*9000)+1000; 
          String otp  = String.valueOf(randomPin); 
 		 logger.info("otp : "+otp);
 		 UserPassword password = new UserPassword();
+		 password.setUserId(userid);
 		 password.setPasswordType("temp");
 		 password.setPasswordValue(otp);
 		 password.setExpiryDate(new Date(System.currentTimeMillis()+TimeUnit.MINUTES.toMillis(5)));
 		 password.setCreatedBy((long)1);
 		 password.setCreatedDate(new Date());
-		 //update database by adding the otp
-		User user = User.builder().userName(loginUser.getUserName()).password(password).build();
-		if(userDao.saveUserOtp(user))
-		 loginUser.setOtp(otp);
-		return loginUser;
+		 return userDao.saveUserOtp(password);
 	}
 	
 	@Override
@@ -118,16 +116,17 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public boolean verifyUser(LoginUser loginUser) {
+	public boolean verifyUser(Long userid,String otp) {
 		// TODO Auto-generated method stub
 		logger.info("verify user");
-		UserPassword password = userDao.validateOtp(loginUser.getUserName(),loginUser.getOtp());
+		UserPassword password = userDao.getUserValidOtp(userid);
 		logger.info("password : "+password);
 		boolean b = false;
 		if(password!=null) {
-			boolean bb = loginUser.getOtp().equals(password.getPasswordValue()!=null?password.getPasswordValue().trim():"");
+			boolean bb = otp.equals(password.getPasswordValue()!=null?password.getPasswordValue().trim():"");
+			logger.info("bb:"+bb);
 			if(bb) {
-				b = userDao.activateUser(loginUser.getUserName());
+				b = userDao.activateUser(userid);
 			}else {
 				b = false;
 				logger.info("saved otp = "+password.getPasswordValue());
@@ -138,7 +137,8 @@ public class UserServiceImp implements UserService {
 					password.setExpiryDate(new Date());
 					userDao.expiredOtp(password);
 				}else {
-					userDao.updateOtpRetrycount(loginUser.getUserName());
+					userDao.updateOtpRetrycount(userid);
+					
 				}
 			}
 			

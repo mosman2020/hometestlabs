@@ -18,13 +18,16 @@ import com.hometest.mybatis.domain.UserPassword;
 @Mapper
 public interface UserMapper {
 	
-	UserPassword validateOtp(String username, String otp);
-	boolean saveUserOtp(User user);
+	UserPassword getUserValidOtp(Long userid);
+	UserPassword saveUserOtp(UserPassword userpassword);
+	
 	User getUserByUsername(String username);
-	int isUserExists(String username);
+	User getUserByUserid(Long userid);
+	public int isUserExists(String username);
+	public boolean isUserExists(Long userid) ;
 	User getUserByProfile(Long profileId);
 	boolean updateUserLoginDetails(User user);
-	boolean updateOtpRetrycount(String username);
+	boolean updateOtpRetrycount(Long userid);
 	
 	boolean updateUserProfile(Profile profile);
 	boolean changeUserPassword(ChangePassword changepassword);
@@ -33,7 +36,7 @@ public interface UserMapper {
 	boolean lockUser(String username);
 	void unlockUsers();
 	boolean expiredOtp(UserPassword password);
-	boolean activateUser(String username);
+	boolean activateUser(Long userid);
 	int changeMobile(ChangeMobileRequest mobile);	
 	boolean deletePendingChangeMobileRequest(Long userid);
 	public boolean getChangeMobileRequest(Long userid);

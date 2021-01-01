@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hometest.service.MessageService;
 
 public class CustomFilter implements Filter {
-
-	@Autowired
-	private MessageService messageService;
+//
+//	@Autowired
+//	private MessageService messageService;
 	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
