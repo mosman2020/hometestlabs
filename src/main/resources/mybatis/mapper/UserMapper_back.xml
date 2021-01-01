@@ -1,66 +1,121 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- Copyright 2015-2019 the original author or authors. Licensed under the 
-	Apache License, Version 2.0 (the "License"); you may not use this file except 
-	in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
-	Unless required by applicable law or agreed to in writing, software distributed 
-	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
-	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
-	the specific language governing permissions and limitations under the License. -->
+<!--
+
+       Copyright 2015-2019 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
-<mapper namespace="com.hometest.mybatis.dao.mapper.UserMapper">
-<select id="isUserExists" resultType="int"> select count(user_id) from users where user_name=#{username} </select>
-<select id="validateOtp" resultMap="passwordMap"> select password_id,password_value,retry_count,expiry_date from passwords where user_id = (select user_id from users where user_name=#{userName}) and expiry_date> now() order by password_id desc limit 1 </select>
-<select id="getUserByUsername" resultMap="userMap" resultOrdered="true"> select usr.user_id, usr.user_name, usr.is_logged_in, usr.is_deleted, usr.prefered_language, usr.user_status, usr.user_type, usr.last_login, prof.first_name, prof.middle_name, prof.family_name, prof.date_birth, prof.gender, prof.mobile, prof.title, prof.is_deleted as "prof_is_deleted", pass.password_value, pass.password_type, pass.expiry_date, pass.retry_count from users usr inner join profiles prof on usr.profile_id = prof.profile_id inner join passwords pass on usr.user_id = pass.user_id where usr.user_name = #{userName} and pass.password_type='permanent' </select>
-<resultMap id="userMap" type="com.hometest.mybatis.domain.User">
-<id property="userId" column="user_id"/>
-<result property="userName" column="user_name"/>
-<result property="loggedIn" column="is_logged_in"/>
-<result property="deleted" column="is_deleted"/>
-<result property="preferedLanguage" column="prefered_language"/>
-<result property="userStatus" column="user_status"/>
-<result property="userType" column="user_type"/>
-<result property="lastLogin" column="last_login"/>
-<association property="profile" resultMap="profileMap"/>
-<association property="password" resultMap="passwordMap"/>
-</resultMap>
-<resultMap id="profileMap" type="com.hometest.mybatis.domain.Profile">
-<result property="firstName" column="first_name"/>
-<result property="middleName" column="middle_name"/>
-<result property="familyName" column="family_name"/>
-<result property="gender" column="gender"/>
-<result property="mobile" column="mobile"/>
-<result property="title" column="title"/>
-<result property="dateBirth" column="date_birth"/>
-<result property="deleted" column="prof_is_deleted"/>
-</resultMap>
-<resultMap id="passwordMap" type="com.hometest.mybatis.domain.UserPassword">
-<result property="passwordId" column="password_id"/>
-<result property="passwordValue" column="password_value"/>
-<result property="passwordType" column="password_type"/>
-<result property="retryCount" column="retry_count"/>
-<result property="expiryDate" column="expiry_date"/>
-</resultMap>
-<insert id="insertUser" useGeneratedKeys="true" parameterType="com.hometest.mybatis.domain.User" keyColumn="user_id" keyProperty="userId"> INSERT INTO users (user_name,user_status,user_type,prefered_language,profile_id,created_date,created_by) values(#{userName},#{userStatus},#{userType},#{preferedLanguage},#{profile.profileId},#{createdDate},#{createdBy}) </insert>
-<insert id="insertUserPassword" parameterType="com.hometest.mybatis.domain.UserPassword"> INSERT INTO passwords (password_value,password_type, user_id, expiry_date,created_date,created_by) values(#{passwordValue}, #{passwordType},#{userId}, #{expiryDate},#{createdDate},#{createdBy}) </insert>
-<insert id="insertUserProfile" parameterType="com.hometest.mybatis.domain.Profile" useGeneratedKeys="true" keyColumn="profile_id" keyProperty="profileId"> INSERT INTO profiles (first_name,middle_name,family_name,gender,mobile,title,date_birth,created_date,created_by) VALUES (#{firstName},#{middleName},#{familyName},#{gender},#{mobile},#{title},#{dateBirth},#{createdDate},#{createdBy}) </insert>
-<update id="updateUserProfile"> update profiles set first_name=#{firstName} , middle_name=#{middleName} ,family_name=#{familyName} , title=#{title}, gender=#{gender} ,date_birth=#{dateBirth},updated_by=#{updatedBy},updated_date=#{updatedDate} where profile_id=#{profileId} </update>
-<update id="saveUserOtp" parameterType="com.hometest.mybatis.domain.User"> insert into passwords (user_id,password_value,expiry_date,password_type,created_by,created_date) values ( (select user_id from users where user_name=#{userName}), #{password.passwordValue},#{password.expiryDate},#{password.passwordType}, #{password.createdBy},#{password.createdDate}) </update>
-<update id="updateUserLoginDetails"> update users set last_login=#{lastLogin}, is_logged_in =#{loggedIn} where user_name=#{userName} </update>
-<update id="updateUserRetrycount"> update passwords set retry_count = #{password.retryCount} where password_type = 'permanent' and user_id = (select user_id from users where user_name=#{userName}) </update>
-<update id="lockUser"> update users set user_status='L', updated_date = #{updateDate}, updated_by = #{updateBy} where user_name=#{userName} </update>
-<delete id="deleteExpiredOtp"> delete from passwords where password_type='temp' and expiry_date = now() </delete>
-<update id="unlockUsers"> update users set user_status='A' where user_status = 'L' and age(now(), updated_date) >= '15 minutes'; </update>
-<update id="updateOtpRetrycount"> update passwords SET retry_count = retry_count+1 where password_type='temp' and expiry_date> now() and password_id= (select max(password_id) from passwords where user_id = (select user_id from users where user_name=#{userName})) </update>
-<update id="expirOtp" parameterType="com.hometest.mybatis.domain.UserPassword"> update passwords SET expiry_date = #{expiryDate} where password_id = #{passwordId} </update>
-<update id="changePassword" parameterType="com.hometest.mybatis.domain.ChangePassword"> update passwords set password_value = #{newPassword} , updated_by=#{updatedBy},updated_date=#{updatedDate} where user_id = (select user_id from users where user_name=#{userName}) and password_type='permanent' </update>
-<update id="activateUser"> update users set user_status='A' where user_name=#{userName} </update>
-<select id="getUserByProfile" resultMap="userMap"> select * from users where profile_id = #{profileId} </select>
-<insert id="addChangeMobileRequest" parameterType="com.hometest.mybatis.domain.ChangeMobileRequest" useGeneratedKeys="true" keyColumn="request_id" keyProperty="requestId"> INSERT INTO change_mobile (user_id,old_value,new_value,status,type,created_by,created_date) values (#{userId},#{oldValue},#{newValue},#{status},#{type},#{createdBy},#{createdDate}) </insert>
-<update id="deletePendingChangeMobileRequest"> update change_mobile set status='F' where user_id=#{userId} and status='P' </update>
-<select id="getChangeMobileRequestCount" resultType="int"> select count(1) from change_mobile where user_id=#{userId} and status='P' </select>
-<select id="getChangeMobileRequest" resultType="com.hometest.mybatis.domain.ChangeMobileRequest"> select * from change_mobile where user_id=#{userId} and status='P' </select>
-<update id="updateChangeMobileRequestStatus" parameterType="com.hometest.mybatis.domain.ChangeMobileRequest"> update change_mobile set status=#{status}, updated_by=#{updatedBy} updated_date=#{updated_date} where request_id=#{requestId} </update>
+<mapper namespace="com.hometest.mybatis.mapper.UserMapper">
+
+	<select id="isUserExists" resultType="int">
+		select count(user_id) from users
+		where
+		user_name=#{username}
+	</select>
+	
+	
+	<select id="getUserByUsername" resultMap="userMap" resultOrdered="true">
+		select
+		usr.user_id,
+		usr.user_name,
+		usr.is_logged_in,
+		usr.is_deleted,
+		usr.prefered_language,
+		usr.user_status,
+		usr.user_type,
+		usr.last_login,
+		prof.first_name,
+		prof.middle_name,
+		prof.family_name,
+		prof.date_birth,
+		prof.gender,
+		prof.mobile,
+		prof.title,
+		prof.is_deleted as
+		"prof_is_deleted",
+		pass.password_value,
+		pass.password_type,
+		pass.expiry_date,
+		pass.retry_count
+		from users usr
+		inner join profiles prof on usr.profile_id = prof.profile_id
+		inner join passwords pass on usr.user_id = pass.user_id
+		where
+		usr.user_name = #{userName}
+		and pass.password_type='permanent'
+	</select>
+
+<select id="getUserByUserid" resultMap="userMap" resultOrdered="true">
+		select
+		usr.user_id,
+		usr.user_name,
+		usr.is_logged_in,
+		usr.is_deleted,
+		usr.prefered_language,
+		usr.user_status,
+		usr.user_type,
+		usr.last_login,
+		prof.first_name,
+		prof.middle_name,
+		prof.family_name,
+		prof.date_birth,
+		prof.gender,
+		prof.mobile,
+		prof.title,
+		prof.is_deleted as
+		"prof_is_deleted"
+	
+		from users usr
+		inner join profiles prof on usr.profile_id = prof.profile_id
+		inner join passwords pass on usr.user_id = pass.user_id
+		where
+		usr.user_id = #{userId}
+		and pass.password_type='permanent'
+	</select>
+
+	<resultMap id="userMap" type="com.hometest.mybatis.domain.User">
+		<id property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="loggedIn" column="is_logged_in" />
+		<result property="deleted" column="is_deleted" />
+		<result property="preferedLanguage" column="prefered_language" />
+		<result property="userStatus" column="user_status" />
+		<result property="userType" column="user_type" />
+		<result property="lastLogin" column="last_login" />
+		<association property="profile" resultMap="profileMap" />
+		<association property="password" resultMap="passwordMap" />
+	</resultMap>
+	<resultMap id="profileMap" type="com.hometest.mybatis.domain.Profile" >
+		<result property="firstName" column="first_name" />
+		<result property="middleName" column="middle_name" />
+		<result property="familyName" column="family_name" />
+		<result property="gender" column="gender" />
+		<result property="mobile" column="mobile" />
+		<result property="title" column="title" />
+		<result property="dateBirth" column="date_birth" />
+		<result property="deleted" column="prof_is_deleted" />
+	</resultMap>
+	<resultMap id="passwordMap" type="com.hometest.mybatis.domain.UserPassword">
+		<result property="passwordId" column="password_id" />
+		<result property="passwordValue" column="password_value" />
+		<result property="passwordType" column="password_type" />
+		<result property="retryCount" column="retry_count" />
+		<result property="expiryDate" column="expiry_date" />
+	</resultMap>
+	
 </mapper>

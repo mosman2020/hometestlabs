@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.hometest.enums.UserStatus;
+import com.hometest.model.res.TokenData;
 import com.hometest.mybatis.domain.User;
 
 
@@ -16,6 +17,7 @@ public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	private User user;
+	private TokenData token;
 	
 	UserDetailsImpl(User user){
 		this.user= user;
@@ -78,5 +80,7 @@ public class UserDetailsImpl implements UserDetails {
 		this.user = user;
 	}
 
-	
+	public TokenData getTokenData() {
+		return TokenData.builder().userid(user.getUserId()).build();
+	}
 }

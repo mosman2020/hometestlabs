@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -42,7 +43,14 @@ public class DumpResponseAdvice implements ResponseBodyAdvice<Object> {
 			Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
 		// TODO Auto-generated method stub
 		logger.info("Response Body: {} :" + body.toString());
-
+		
+//		if(body instanceof ResponseEntity) {
+//			logger.info("body instanceof ResponseEntity");
+//			
+//		}else {
+//			throw new RuntimeException();
+//		}
+/*
 		if (body instanceof Response) {
 			ResponseHeader header = ((Response) body).getHeader();
 			messageDupmService.insertMessageDump(MessageDump.builder()
@@ -60,6 +68,9 @@ public class DumpResponseAdvice implements ResponseBodyAdvice<Object> {
 		} else {
 			throw new RuntimeException();
 		}
+		*/
+		return body;
 	}
+	
 
 }

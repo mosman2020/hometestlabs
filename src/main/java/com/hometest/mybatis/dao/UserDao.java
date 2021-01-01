@@ -37,21 +37,33 @@ public class UserDao implements UserMapper{
 
 	@Override
 	public User getUserByUsername(String username) {
-		return this.sqlSession.selectOne("getUserByUsername", username);
+		User user = this.sqlSession.selectOne("getUserByUsername", username);
+		logger.info("user: "+user);
+		return user;
 	}
 	
 	@Override
-	public UserPassword validateOtp(String username, String otp) {
-		logger.info("validate otp password");
-		UserPassword password = this.sqlSession.selectOne("validateOtp", username);
+	public User getUserByUserid(Long userid) {
+		return this.sqlSession.selectOne("getUserByUserid", userid);
+	}
+	
+	@Override
+	public UserPassword getUserValidOtp(Long userid) {
+		logger.info("get user otp");
+		UserPassword password = this.sqlSession.selectOne("getUserOtp", userid);
+		logger.info("passwords:"+password);
 		return password;
 	}
 
 	@Override
-	public boolean saveUserOtp(User user) {
+	public UserPassword saveUserOtp(UserPassword userpassword) {
 		// TODO Auto-generated method stub
 		logger.info("from saveUserOpt dao");
-		return 1== this.sqlSession.update("saveUserOtp",user);
+		if(1==this.sqlSession.insert("saveUserOtp",userpassword)) {
+			logger.info("otp object :"+userpassword);
+			return  userpassword;
+		}
+		return null;
 	}
 
 	@Override
@@ -109,6 +121,11 @@ public class UserDao implements UserMapper{
 		return numberOfExistance;
 	}
 
+	public boolean isUserExists(Long userid) {
+		int numberOfExistance = this.sqlSession.selectOne("isUserExistsByid", userid);
+		return 1==numberOfExistance;
+	}
+	
 	@Override
 	public boolean lockUser(String username) {
 		Map params = new HashMap();
@@ -131,10 +148,10 @@ public class UserDao implements UserMapper{
 	}
 
 	@Override
-	public boolean updateOtpRetrycount(String username) {
+	public boolean updateOtpRetrycount(Long userid) {
 		// TODO Auto-generated method stub
 		logger.info("update otp retry count");
-		return 1==this.sqlSession.update("updateOtpRetrycount",username);
+		return 1==this.sqlSession.update("updateOtpRetrycount",userid);
 	}
 
 	@Override
@@ -146,10 +163,10 @@ public class UserDao implements UserMapper{
 	}
 
 	@Override
-	public boolean activateUser(String username) {
+	public boolean activateUser(Long userid) {
 		// TODO Auto-generated method stub
 		logger.info("activate user");
-		return 1== this.sqlSession.update("activateUser",username);
+		return 1== this.sqlSession.update("activateUser",userid);
 	}
 
 	@Override

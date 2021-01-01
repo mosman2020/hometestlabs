@@ -4,7 +4,6 @@ package com.hometest.mybatis.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -12,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hometest.enums.UserStatus;
 import com.hometest.enums.UserType;
@@ -59,16 +59,15 @@ public class User extends Audit implements Serializable{
 	private String userName;
 	
 	@Valid
-	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	@JsonIgnore
 	private UserPassword password;
 	
 	private Date lastLogin;
 	
 	@Valid
-	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Profile profile;
 
-
+	
 	private Set<Role> roles = new HashSet<>();
 	
 	private boolean mobileVerified;

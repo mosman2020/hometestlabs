@@ -13,9 +13,11 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MessageSourceResourceBundleLocator;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.hometest.validation.CustomMessageInterpolator;
 
+@EnableWebMvc
 @SpringBootApplication
 public class HomeTestLabsBackendApplication extends SpringBootServletInitializer{
 

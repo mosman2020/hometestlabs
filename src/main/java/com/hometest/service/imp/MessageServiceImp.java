@@ -35,4 +35,11 @@ public class MessageServiceImp implements MessageService{
                 id, new Object[] {},locale);  
         return errorMessage;
     }
+    
+    @Override
+    public String getMessage(String id) {
+        String errorMessage = messageSource.getMessage(
+                id, new Object[] {},Locale.US);  
+        return errorMessage;
+    }
 }

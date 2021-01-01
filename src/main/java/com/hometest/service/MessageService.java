@@ -10,4 +10,5 @@ package com.hometest.service;
 public interface MessageService {
 	 public String getMessage(String id, Object[] params,String lang);
 	 public String getMessage(String id, String lang);
+	 public String getMessage(String id) ;
 }

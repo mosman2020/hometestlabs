@@ -1,0 +1,928 @@
+{
+	"version": 1,
+	"collections": [
+		{
+			"id": "80995a0e-de2d-494f-863a-692d1b396c7e",
+			"name": "hometestlabs",
+			"description": "Home Test Labs API collection",
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [],
+			"folders_order": [
+				"0e96a770-6f2c-4034-9ea8-72fcd2cb4c52"
+			],
+			"protocolProfileBehavior": {},
+			"folders": [
+				{
+					"id": "0e96a770-6f2c-4034-9ea8-72fcd2cb4c52",
+					"name": "users",
+					"description": null,
+					"auth": null,
+					"events": null,
+					"collection": "80995a0e-de2d-494f-863a-692d1b396c7e",
+					"folder": null,
+					"order": [
+						"4a12e482-2b2a-49d0-9ecf-34fe64dbbad5",
+						"7a414cb4-a76f-449f-a169-8d6913f95e1b",
+						"5af3c2a4-29c5-47b2-9c3a-2e2ba53a7c01",
+						"ed731636-9739-45e6-a522-ccced0a24a61"
+					],
+					"folders_order": [],
+					"protocolProfileBehavior": {},
+					"collectionId": "80995a0e-de2d-494f-863a-692d1b396c7e",
+					"folderId": "0e96a770-6f2c-4034-9ea8-72fcd2cb4c52"
+				}
+			],
+			"requests": [
+				{
+					"id": "4a12e482-2b2a-49d0-9ecf-34fe64dbbad5",
+					"name": "/api/users/auth",
+					"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\auth",
+					"description": "Authenticate User",
+					"data": [],
+					"dataOptions": {
+						"raw": {
+							"language": "json"
+						}
+					},
+					"dataMode": "raw",
+					"headerData": [],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "noauth",
+						"noauth": []
+					},
+					"events": [],
+					"folder": "0e96a770-6f2c-4034-9ea8-72fcd2cb4c52",
+					"responses": [
+						{
+							"id": "24eba1b8-f8ac-4cfb-8077-ab4ffc089c6a",
+							"name": "/api/users/auth - validation errors",
+							"status": null,
+							"mime": null,
+							"language": "json",
+							"text": "{\n    \"code\": \"E200000\",\n    \"message\": \"Validation Error\",\n    \"errors\": [\n        {\n            \"code\": \"E200003\",\n            \"message\": \"Invalid mail format!\",\n            \"source\": \"userName\"\n        },\n        {\n            \"code\": \"E200001\",\n            \"message\": \"Mandatory Field!\",\n            \"source\": \"password\"\n        }\n    ]\n}",
+							"responseCode": {
+								"code": 400,
+								"name": "Bad Request"
+							},
+							"requestObject": {
+								"data": [],
+								"dataMode": "raw",
+								"dataOptions": {
+									"raw": {
+										"language": "json"
+									}
+								},
+								"headerData": [],
+								"method": "POST",
+								"pathVariableData": [],
+								"queryParams": [],
+								"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\auth",
+								"rawModeData": "{\n    \"userName\" : \"mosman10hotmail.com\",\n    \"passworddd\" : \"rEEm2010\"\n}"
+							},
+							"headers": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Dec 2020 17:25:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookies": null,
+							"request": "4a12e482-2b2a-49d0-9ecf-34fe64dbbad5",
+							"collection": "80995a0e-de2d-494f-863a-692d1b396c7e"
+						},
+						{
+							"id": "52f0d902-37d7-4577-a2ca-dc5d67af5e0a",
+							"name": "/api/users/auth - success",
+							"status": null,
+							"mime": null,
+							"language": "json",
+							"text": "{\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYwOTE3NjMxMSwiZXhwIjoxNjEwMDQwMzExfQ.0CKI_C5KbCJqJ_PT6NWq0NlpyUXVR5QhMSE7J1b0YC3Vmk0Uq8NAkaxJipAxtAc8wA_MOjuZL4y5RR1B_ygtow\",\n        \"userid\": 75\n    }\n}",
+							"responseCode": {
+								"code": 200,
+								"name": "OK"
+							},
+							"requestObject": {
+								"data": [],
+								"dataMode": "raw",
+								"dataOptions": {
+									"raw": {
+										"language": "json"
+									}
+								},
+								"headerData": [],
+								"method": "POST",
+								"pathVariableData": [],
+								"queryParams": [],
+								"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\auth",
+								"rawModeData": "{\n    \"userName\" : \"mosman10@hotmail.com\",\n    \"password\" : \"rEEm2010\"\n}"
+							},
+							"headers": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Dec 2020 17:25:11 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookies": null,
+							"request": "4a12e482-2b2a-49d0-9ecf-34fe64dbbad5",
+							"collection": "80995a0e-de2d-494f-863a-692d1b396c7e"
+						}
+					],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "80995a0e-de2d-494f-863a-692d1b396c7e",
+					"rawModeData": "{\n    \"userName\" : \"mosman10@hotmail.com\",\n    \"password\" : \"rEEm2010\"\n}",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "5af3c2a4-29c5-47b2-9c3a-2e2ba53a7c01",
+					"name": "isUserExists",
+					"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\exists\\moh.elgamal@hotmail.com1",
+					"description": "is uer exists",
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYwOTE2NTI3OCwiZXhwIjoxNjEwMDI5Mjc4fQ.1cM9ef98K9bZlo42Nkk7CuPgeAunNNmSaQT35TchspvQtOqvsKt5FV3IGoMlpBZBuZGSpL4x8jPnl-0ilm04Ag"
+							}
+						]
+					},
+					"events": [],
+					"folder": "0e96a770-6f2c-4034-9ea8-72fcd2cb4c52",
+					"responses": [
+						{
+							"id": "2bdded39-70e4-4f2f-8384-aa727cafef23",
+							"name": "isUserExists - success",
+							"status": null,
+							"mime": null,
+							"language": "plain",
+							"text": null,
+							"responseCode": {
+								"code": 200,
+								"name": "OK"
+							},
+							"requestObject": {
+								"data": null,
+								"dataMode": null,
+								"dataOptions": null,
+								"headerData": [],
+								"method": "GET",
+								"pathVariableData": [],
+								"queryParams": [],
+								"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\exists\\moh.elgamal@hotmail.com"
+							},
+							"headers": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Dec 2020 17:14:07 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookies": null,
+							"request": "5af3c2a4-29c5-47b2-9c3a-2e2ba53a7c01",
+							"collection": "80995a0e-de2d-494f-863a-692d1b396c7e"
+						},
+						{
+							"id": "2c2d30fd-b2da-47ef-905e-393e71768a4d",
+							"name": "isUserExists - error user not exists",
+							"status": null,
+							"mime": null,
+							"language": "plain",
+							"text": null,
+							"responseCode": {
+								"code": 404,
+								"name": "Not Found"
+							},
+							"requestObject": {
+								"data": null,
+								"dataMode": null,
+								"dataOptions": null,
+								"headerData": [],
+								"method": "GET",
+								"pathVariableData": [],
+								"queryParams": [],
+								"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\exists\\moh.elgamal@hotmail.com1"
+							},
+							"headers": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Dec 2020 17:14:36 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookies": null,
+							"request": "5af3c2a4-29c5-47b2-9c3a-2e2ba53a7c01",
+							"collection": "80995a0e-de2d-494f-863a-692d1b396c7e"
+						}
+					],
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYwOTE2NTI3OCwiZXhwIjoxNjEwMDI5Mjc4fQ.1cM9ef98K9bZlo42Nkk7CuPgeAunNNmSaQT35TchspvQtOqvsKt5FV3IGoMlpBZBuZGSpL4x8jPnl-0ilm04Ag"
+					},
+					"collectionId": "80995a0e-de2d-494f-863a-692d1b396c7e",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "7a414cb4-a76f-449f-a169-8d6913f95e1b",
+					"name": "/api/users/{id}",
+					"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\75",
+					"description": "get user by id",
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYwOTEzNjQwNCwiZXhwIjoxNjA5MjIyODA0fQ.JT1b4k49beOyKiDtBf9AxqfvjPxqS6s20tPiI2zXLVxA76kt5w9KK7Zhf9uYg_0dYYR_DpJfhNSeL61PRFHOtw"
+							}
+						]
+					},
+					"events": [],
+					"folder": "0e96a770-6f2c-4034-9ea8-72fcd2cb4c52",
+					"responses": [
+						{
+							"id": "16ca826e-5ac7-4268-ba05-e9673236c92e",
+							"name": "/api/users/{id} - success",
+							"status": null,
+							"mime": null,
+							"language": "json",
+							"text": "{\n    \"data\": {\n        \"userId\": 75,\n        \"userStatus\": \"C\",\n        \"userType\": \"INDV\",\n        \"loggedIn\": true,\n        \"preferedLanguage\": \"EN\",\n        \"userName\": \"mosman10@hotmail.com\",\n        \"lastLogin\": \"2020-12-28T14:21:17.846+00:00\",\n        \"profile\": {\n            \"dateBirth\": \"00-07-1981\",\n            \"familyName\": \"Osman9\",\n            \"firstName\": \"Mohamed9\",\n            \"gender\": \"M\",\n            \"mobile\": \"0564262600\",\n            \"title\": \"MR\"\n        },\n        \"mobileVerified\": false\n    }\n}",
+							"responseCode": {
+								"code": 200,
+								"name": "OK"
+							},
+							"requestObject": {
+								"data": null,
+								"dataMode": null,
+								"dataOptions": null,
+								"headerData": [],
+								"method": "GET",
+								"pathVariableData": [],
+								"queryParams": [],
+								"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\75"
+							},
+							"headers": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Dec 2020 17:16:26 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookies": null,
+							"request": "7a414cb4-a76f-449f-a169-8d6913f95e1b",
+							"collection": "80995a0e-de2d-494f-863a-692d1b396c7e"
+						},
+						{
+							"id": "4f8b7e7d-cc6a-46c6-9d4e-03ed1cab567e",
+							"name": "/api/users/{id} - No data found",
+							"status": null,
+							"mime": null,
+							"language": "json",
+							"text": "{\n    \"code\": \"E300000\",\n    \"message\": \"Business Error\",\n    \"errors\": [\n        {\n            \"code\": \"E30110\",\n            \"message\": \"No data found!\"\n        }\n    ]\n}",
+							"responseCode": {
+								"code": 422,
+								"name": "Unprocessable Entity (WebDAV) (RFC 4918)"
+							},
+							"requestObject": {
+								"data": null,
+								"dataMode": null,
+								"dataOptions": null,
+								"headerData": [],
+								"method": "GET",
+								"pathVariableData": [],
+								"queryParams": [],
+								"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\75"
+							},
+							"headers": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Dec 2020 17:21:31 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookies": null,
+							"request": "7a414cb4-a76f-449f-a169-8d6913f95e1b",
+							"collection": "80995a0e-de2d-494f-863a-692d1b396c7e"
+						},
+						{
+							"id": "7f4c8b54-4adf-4b3f-b024-e7f2af4db70c",
+							"name": "/api/users/{id} - Authentication error",
+							"status": null,
+							"mime": null,
+							"language": "json",
+							"text": "{\n    \"code\": \"E100002\",\n    \"message\": \"Full authentication is required to access this resource\"\n}",
+							"responseCode": {
+								"code": 401,
+								"name": "Unauthorized"
+							},
+							"requestObject": {
+								"data": null,
+								"dataMode": null,
+								"dataOptions": null,
+								"headerData": [],
+								"method": "GET",
+								"pathVariableData": [],
+								"queryParams": [],
+								"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\75"
+							},
+							"headers": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=ISO-8859-1"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Dec 2020 17:16:42 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookies": null,
+							"request": "7a414cb4-a76f-449f-a169-8d6913f95e1b",
+							"collection": "80995a0e-de2d-494f-863a-692d1b396c7e"
+						}
+					],
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYwOTEzNjQwNCwiZXhwIjoxNjA5MjIyODA0fQ.JT1b4k49beOyKiDtBf9AxqfvjPxqS6s20tPiI2zXLVxA76kt5w9KK7Zhf9uYg_0dYYR_DpJfhNSeL61PRFHOtw"
+					},
+					"collectionId": "80995a0e-de2d-494f-863a-692d1b396c7e",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "ed731636-9739-45e6-a522-ccced0a24a61",
+					"name": "generateOtp",
+					"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\375\\otp",
+					"description": "generate one time password for specific user",
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYwOTE2NTI3OCwiZXhwIjoxNjEwMDI5Mjc4fQ.1cM9ef98K9bZlo42Nkk7CuPgeAunNNmSaQT35TchspvQtOqvsKt5FV3IGoMlpBZBuZGSpL4x8jPnl-0ilm04Ag"
+							}
+						]
+					},
+					"events": [],
+					"folder": "0e96a770-6f2c-4034-9ea8-72fcd2cb4c52",
+					"responses": [
+						{
+							"id": "38077488-1d51-4afc-999e-ab84aea5269d",
+							"name": "generateOtp - user not exists error",
+							"status": null,
+							"mime": null,
+							"language": "json",
+							"text": "{\n    \"code\": \"E300000\",\n    \"message\": \"Business Error\",\n    \"errors\": [\n        {\n            \"code\": \"E300109\",\n            \"message\": \"User is NOT exists!\"\n        }\n    ]\n}",
+							"responseCode": {
+								"code": 422,
+								"name": "Unprocessable Entity (WebDAV) (RFC 4918)"
+							},
+							"requestObject": {
+								"data": null,
+								"dataMode": null,
+								"dataOptions": null,
+								"headerData": [],
+								"method": "POST",
+								"pathVariableData": [],
+								"queryParams": [],
+								"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\375\\otp"
+							},
+							"headers": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Dec 2020 17:10:35 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookies": null,
+							"request": "ed731636-9739-45e6-a522-ccced0a24a61",
+							"collection": "80995a0e-de2d-494f-863a-692d1b396c7e"
+						},
+						{
+							"id": "c0c2efbd-5a31-4718-8a2b-9c675264a48f",
+							"name": "generateOtp - success",
+							"status": null,
+							"mime": null,
+							"language": "json",
+							"text": "{\n    \"data\": {\n        \"createdDate\": \"2020-12-28T17:12:33.927+00:00\",\n        \"createdBy\": 1,\n        \"passwordId\": 128,\n        \"userId\": 75,\n        \"passwordValue\": \"5249\",\n        \"retryCount\": 0,\n        \"expiryDate\": \"2020-12-28T17:17:33.927+00:00\",\n        \"passwordType\": \"temp\"\n    }\n}",
+							"responseCode": {
+								"code": 200,
+								"name": "OK"
+							},
+							"requestObject": {
+								"data": null,
+								"dataMode": null,
+								"dataOptions": null,
+								"headerData": [],
+								"method": "POST",
+								"pathVariableData": [],
+								"queryParams": [],
+								"url": "http:\\\\localhost:8090\\hometestlabs\\api\\v1\\users\\75\\otp"
+							},
+							"headers": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Dec 2020 17:12:34 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookies": null,
+							"request": "ed731636-9739-45e6-a522-ccced0a24a61",
+							"collection": "80995a0e-de2d-494f-863a-692d1b396c7e"
+						}
+					],
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYwOTE2NTI3OCwiZXhwIjoxNjEwMDI5Mjc4fQ.1cM9ef98K9bZlo42Nkk7CuPgeAunNNmSaQT35TchspvQtOqvsKt5FV3IGoMlpBZBuZGSpL4x8jPnl-0ilm04Ag"
+					},
+					"collectionId": "80995a0e-de2d-494f-863a-692d1b396c7e",
+					"headers": "",
+					"pathVariables": {}
+				}
+			]
+		}
+	],
+	"environments": [
+		{
+			"id": "3558771a-771f-48ed-8934-5d4e7d1a5ed0",
+			"name": "My Workspace - globals",
+			"values": []
+		}
+	],
+	"headerPresets": [],
+	"globals": []
+}

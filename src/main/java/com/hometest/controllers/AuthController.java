@@ -1,10 +1,12 @@
 package com.hometest.controllers;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,20 +19,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hometest.mybatis.domain.LoginUser;
+import com.hometest.model.req.LoginParam;
+import com.hometest.model.res.Response;
+import com.hometest.model.res.TokenData;
 import com.hometest.service.MessageService;
 import com.hometest.service.UserService;
 import com.hometest.service.imp.UserDetailsImpl;
-import com.hometest.utils.ErrorCodes;
 import com.hometest.utils.jwt.JwtUtils;
-import com.hometest.utils.payload.request.Request;
-import com.hometest.utils.payload.response.Response;
-import com.hometest.utils.payload.response.ResponseHeader;
 import com.hometest.validation.groups.OnLogin;
+
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/users")
 public class AuthController {
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -49,31 +50,21 @@ public class AuthController {
 
 	private Logger logger = LoggerFactory.getLogger(AuthController.class);
 	
-	@PostMapping("/signin")
+	@PostMapping("/auth")
 	@Validated({OnLogin.class})
-	public Response authenticateUser(@RequestBody Request<LoginUser> request, HttpServletRequest httpRequest) {
+	public ResponseEntity<Response> authenticateUser(@RequestBody LoginParam user, HttpServletRequest httpRequest) {
 		
-		logger.info("from authinticate req after converted {} :" + request);
-		LoginUser user = request.getBody();
+		logger.info("from authinticate req after converted {} :" + user);
+//		LoginUser user = request.getBody();
 		Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
 		logger.info("from AuthController.authenticateUser()  isAuthenticated():" + authentication.isAuthenticated());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-			
-		// update user login info with success login
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+		TokenData token = userDetails.getTokenData();
+		token.setToken(jwtUtils.generateJwtToken(authentication));
+		return ResponseEntity.ok().body(Response.builder().payload(token).build());
 		
-		Response response = Response.builder()
-				.header(ResponseHeader.builder()
-				.statusCode(ErrorCodes.SUCESS_OPERATION)
-				.message(messageService.getMessage(ErrorCodes.SUCESS_OPERATION, request.getHeader().getPreferedLanguage()))
-	    		.backendRequestId(request.getHeader().getBackendRequestId())
-				.requestId(request.getHeader().getRequestId())
-	    		.path(httpRequest.getContextPath())
-	    		.token(jwtUtils.generateJwtToken(authentication))
-	    		.build())
-		    	.body(userDetails.getUser()).build();
-		return response;
 	}
 	
 }

@@ -40,6 +40,7 @@ public class UserPassword extends Audit implements Serializable{
 	private static final long serialVersionUID = -3207104642088836652L;
 	
 	private Long passwordId;
+	
 	private Long userId;
 		
 	@NotNull (groups = {OnCreate.class},message = ErrorCodes.MANDATORY_FIELD)
@@ -47,11 +48,7 @@ public class UserPassword extends Audit implements Serializable{
 	private String passwordValue;
 	
 	private int retryCount;
-	
-//	@NotNull(groups=OnCreate.class,message = ErrorCodes.MANDATORY_FIELD)
-//	@Null(groups=OnUpdate.class)
-//	private String confirmPassword;
-	
+		
 	@DateTimeFormat
 	private Date expiryDate;
 	

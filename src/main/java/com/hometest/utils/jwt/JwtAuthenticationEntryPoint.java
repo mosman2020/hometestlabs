@@ -2,8 +2,10 @@ package com.hometest.utils.jwt;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -13,11 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+import com.hometest.model.res.Error;
+import com.hometest.model.res.ErrorData;
 import com.hometest.service.MessageService;
 import com.hometest.utils.ErrorCodes;
 import com.hometest.utils.JsonUtils;
@@ -45,24 +50,15 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	        while((line = reader.readLine()) != null){
 	            buffer.append(line);
 	        }
-
-	        Request req = JsonUtils.convertJsonToObject(buffer.toString(), Request.class);
-
 		logger.error("Unauthorized error: {}", authException.getMessage());
 
-		Map<String, String> errors = new HashMap<>();
-		errors.put(ErrorCodes.ACCESS_DENIED, messageService.getMessage(ErrorCodes.ACCESS_DENIED, "EN"));
-		Response res = Response.builder()
-				.header(ResponseHeader.builder()
-				.errors(errors)
-				.statusCode(ErrorCodes.GENERIC_FAILURE_ERROR)
-				.requestId(req.getHeader().getRequestId())
-				.path(req.getHeader().getPath())
-				.message(messageService.getMessage(ErrorCodes.GENERIC_FAILURE_ERROR, "EN"))
-				.timestamp(new Date()).build())
-				.body(null).build();
-		String responseAsString = JsonUtils.convertObjectToJsonNode(res).toPrettyString();
-		response.setStatus(HttpServletResponse.SC_OK);
+//		List<Error> errors = new ArrayList<Error>();
+//		errors.add(Error.builder().code(ErrorCodes.ACCESS_DENIED).message(authException.getMessage()).build());
+		ErrorData errorData = ErrorData.builder().code(ErrorCodes.ACCESS_DENIED).message(authException.getMessage()).build();
+		String responseAsString = JsonUtils.convertObjectToJsonNode(errorData).toPrettyString();
+		
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		response.setContentType("application/json");
 		response.getWriter().write(responseAsString);
 		response.getWriter().flush();
 		response.getWriter().close();
