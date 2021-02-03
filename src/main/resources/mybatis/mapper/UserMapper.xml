@@ -23,7 +23,7 @@
 <mapper namespace="com.hometest.mybatis.mapper.UserMapper">
 
 	<select id="isUserExists" resultType="int">
-		select count(user_id) from users
+		select count(1) from users
 		where
 		user_name=#{username}
 	</select>

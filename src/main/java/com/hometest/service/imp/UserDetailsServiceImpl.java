@@ -28,10 +28,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		User user = userDao.getUserByUsername(username);
 		if(user ==null)
 			throw new UsernameNotFoundException("User Not Found");
-		if(UserStatus.CREATED.getValue().equals(user.getUserStatus())|| userDao.getChangeMobileRequest(user.getUserId()))
-			user.setMobileVerified(false);
-		else
-			user.setMobileVerified(true);
+//		if(UserStatus.CREATED.getValue().equals(user.getUserStatus())|| userDao.getChangeMobileRequest(user.getUserId()))
+//			user.setMobileVerified(false);
+//		else
+//			user.setMobileVerified(true);
 		
 		return new UserDetailsImpl(user);
 	}

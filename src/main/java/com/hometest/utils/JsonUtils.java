@@ -10,7 +10,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hometest.utils.payload.request.Request;
 
 /**
  * @author moosman
@@ -19,14 +18,14 @@ import com.hometest.utils.payload.request.Request;
 public class JsonUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(JsonUtils.class);
-
+/*
 	public static <T> T convertRequestToObject(Request request, Class<T> type) {
 //		T returnValue = null;
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
 		return objectMapper.convertValue(request.getBody(), type);
 	}
-
+*/
 	public static JsonNode convertObjectToJsonNode(Object obj) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		return objectMapper.convertValue(obj, JsonNode.class);

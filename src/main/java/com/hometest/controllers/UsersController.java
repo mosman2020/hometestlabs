@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hometest.model.res.Response;
 import com.hometest.model.res.TokenData;
-import com.hometest.mybatis.domain.UserPassword;
 import com.hometest.service.MessageService;
 import com.hometest.service.UserService;
 
@@ -44,7 +43,8 @@ public class UsersController {
 	
 	@GetMapping(value = "/users/exists/{username}")
 	public ResponseEntity isUserExists( @PathVariable String username){
-		logger.info("is user exists : "+username);
+		logger.info("is user exists :"+username+":");
+		logger.info("is exists: "+userService.isUserExists(username));
 			if (userService.isUserExists(username))
 				return ResponseEntity.status(HttpStatus.OK).build();
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -63,5 +63,76 @@ public class UsersController {
 //		if(userService.verifyUser(id,otp.getToken()))
 			return ResponseEntity.status(HttpStatus.OK).body(Response.builder().build());
 	}
+	
+	/*
+	 
+	 @PostMapping(value = "/signup")
+	@Validated(OnCreate.class)
+	public ResponseEntity<Response> registerUser(@RequestBody Request<User> request, HttpServletRequest httpRequest) {
+		 logger.info("request {} : "+request);
+		 User user = request.getBody();
+		 String pass = user.getPassword().getPasswordValue();
+		 user.getPassword().setPasswordValue(encoder.encode(pass));
+		 Response response = Response.builder()
+			  	.header(ResponseHeader.builder()
+	  			.statusCode(ErrorCodes.SUCESS_OPERATION)
+	    		.message(messageService.getMessage(ErrorCodes.SUCESS_OPERATION, request.getHeader().getPreferedLanguage()))
+	    		.backendRequestId(request.getHeader().getBackendRequestId())
+				.requestId(request.getHeader().getRequestId())
+	    		.path(httpRequest.getServletPath())
+	    		.build())
+	    		.body(userService.createUser(request.getBody())).build();
+	        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
+	
+	 @PostMapping(value = "/changePassword")
+	public ResponseEntity<Response> changePassword(@RequestBody Request<ChangePassword> request,  HttpServletRequest httpRequest) {
+		logger.info("change password request {} : "+request);
+		ChangePassword change = request.getBody();
+		boolean result = userService.changeUserPassword(change);
+		Response response = Response.builder()
+				.header(ResponseHeader.builder()
+				.statusCode(ErrorCodes.SUCESS_OPERATION)
+	    		.message(messageService.getMessage(ErrorCodes.SUCESS_OPERATION, request.getHeader().getPreferedLanguage()))
+	    		.backendRequestId(request.getHeader().getBackendRequestId())
+				.requestId(request.getHeader().getRequestId())
+	    		.path(httpRequest.getServletPath())	    		
+	    		.build())
+	    		.body(result).build();
+	    return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+	
+	 @PostMapping(value = "/updateUserProfile")
+//	@Validated(OnCreate.class)
+	public ResponseEntity<Response> updateUserProfile(@RequestBody Request<Profile> request, HttpServletRequest httpRequest) {
+		 logger.info("update user profile request {} : "+request);
+		 Response response = Response.builder()
+			  	.header(ResponseHeader.builder()
+	  			.statusCode(ErrorCodes.SUCESS_OPERATION)
+	    		.message(messageService.getMessage(ErrorCodes.SUCESS_OPERATION, request.getHeader().getPreferedLanguage()))
+	    		.backendRequestId(request.getHeader().getBackendRequestId())
+				.requestId(request.getHeader().getRequestId())
+	    		.path(httpRequest.getServletPath())
+	    		.build())
+	    		.body(userService.updateUserProfile(request.getBody())).build();
+	        return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+	
+	 @PostMapping(value = "/changeUserMobile")
+//	@Validated(OnCreate.class)
+	public ResponseEntity<Response> changeUserMobile(@RequestBody Request<ChangeMobileRequest> request, HttpServletRequest httpRequest) {
+		 logger.info("update user profile request {} : "+request);
+		 Response response = Response.builder()
+			  	.header(ResponseHeader.builder()
+	  			.statusCode(ErrorCodes.SUCESS_OPERATION)
+	    		.message(messageService.getMessage(ErrorCodes.SUCESS_OPERATION, request.getHeader().getPreferedLanguage()))
+	    		.backendRequestId(request.getHeader().getBackendRequestId())
+				.requestId(request.getHeader().getRequestId())
+	    		.path(httpRequest.getServletPath())
+	    		.build())
+	    		.body(userService.changeUserMobile(request.getBody())).build();
+	        return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+	 */
 	
 }

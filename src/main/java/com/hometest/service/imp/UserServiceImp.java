@@ -48,13 +48,14 @@ public class UserServiceImp implements UserService {
 	
 	@Override
 	public User getByUserId(Long userid) {
-		if(userDao.isUserExists(userid))
-			throw new BusinessException(ErrorCodes.NO_DATA_FOUND);
+//		if(userDao.isUserExists(userid))
+//			throw new BusinessException(ErrorCodes.NO_DATA_FOUND);
 		return userDao.getUserByUserid(userid);
 	}
 	
 	public boolean isUserExists(String username) {
 		int isUserExists = userDao.isUserExists(username);
+		logger.info("int isUserExists = "+isUserExists);
 		return isUserExists == 1;
 	}
 

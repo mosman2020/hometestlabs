@@ -5,12 +5,9 @@ package com.hometest.mybatis.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.hometest.utils.payload.response.ResponseHeader;
-import com.hometest.validation.annotation.DateFormat;
 
 import lombok.Builder;
 import lombok.Data;

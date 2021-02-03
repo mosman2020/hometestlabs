@@ -6,14 +6,10 @@ package com.hometest.service.imp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.hometest.mybatis.dao.MessageDumpDao;
-import com.hometest.mybatis.domain.MessageDump;
 import com.hometest.service.MessageDumpService;
-import com.hometest.utils.payload.request.Request;
-import com.hometest.utils.payload.response.Response;
 
 
 /**
@@ -30,6 +26,7 @@ public class MessageDumpServiceImp implements MessageDumpService {
 	@Autowired
 	MessageDumpDao messageDupmDao;
 
+/*
 	@Override
 	@Async
 	public void insertMessageDump(Response response) {
@@ -52,5 +49,5 @@ public class MessageDumpServiceImp implements MessageDumpService {
 			logger.error(ex.getCause().getMessage());
 		}
 	}
-
+*/
 }
