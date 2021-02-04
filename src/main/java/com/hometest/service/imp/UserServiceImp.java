@@ -6,6 +6,8 @@ package com.hometest.service.imp;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import com.hometest.dto.SignupDto;
+import com.hometest.enums.UserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,6 @@ import com.hometest.enums.ChangeMobileStatus;
 import com.hometest.enums.ChangeMobileType;
 import com.hometest.enums.UserStatus;
 import com.hometest.exceptionhandling.exception.BusinessException;
-import com.hometest.model.res.UserData;
 import com.hometest.mybatis.dao.UserDao;
 import com.hometest.mybatis.domain.ChangeMobileRequest;
 import com.hometest.mybatis.domain.ChangePassword;
@@ -56,25 +57,6 @@ public class UserServiceImp implements UserService {
 	public boolean isUserExists(String username) {
 		int isUserExists = userDao.isUserExists(username);
 		return isUserExists == 1;
-	}
-
-	@Override
-	public User createUser(User user) {
-		logger.info("Create user :" + user);
-		user.setUserStatus(UserStatus.CREATED.getValue());
-		if(!isUserExists(user.getUserName())){
-			user.setCreatedBy((long)1);
-			user.setCreatedDate(new Date());
-			user.getPassword().setPasswordType("permanent");
-			user.getPassword().setCreatedBy((long)1);
-			user.getPassword().setCreatedDate(new Date());
-			user.getProfile().setCreatedBy((long)1);
-			user.getProfile().setCreatedDate(new Date());
-			userDao.createUser(user);
-		}else {
-			throw new BusinessException(ErrorCodes.USER_EXISTS,new String[] {user.getUserName()});
-		}
-		return user;
 	}
 
 	@Override
@@ -195,5 +177,34 @@ public class UserServiceImp implements UserService {
 		int requestId = userDao.changeMobile(mobile);
 		return mobile;
 	}
-	
+
+	@Override
+	public User signup(SignupDto request) {
+
+		if(isUserExists(request.getUserName()))
+			throw new BusinessException("User already exist");
+
+		Profile profile = new Profile();
+		profile.setFirstName(request.getFirstName());
+		profile.setMiddleName(request.getMiddleName());
+		profile.setFamilyName(request.getFamilyName());
+		profile.setTitle(request.getTitle());
+		profile.setGender(request.getGender());
+		profile.setMobile(request.getMobile());
+
+		UserPassword password = new UserPassword();
+		password.setPasswordValue(request.getPassword());
+		password.setPasswordType("permanent");
+
+		User user = new User();
+		user.setUserName(request.getUserName());
+		user.setUserStatus(UserStatus.CREATED.getValue());
+		user.setProfile(profile);
+		user.setUserType(UserType.INDIVIDUAL.getValue());
+		user.setPassword(password);
+
+		userDao.createUser(user);
+		return user;
+	}
+
 }

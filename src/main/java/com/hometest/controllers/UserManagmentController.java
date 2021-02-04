@@ -79,7 +79,7 @@ public class UserManagmentController {
 		    	.body(userService.getByUsername(request.getBody())).build();
 		 return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-	
+	/*
 	@PostMapping(value = "/signup")
 	@Validated(OnCreate.class)
 	public ResponseEntity<Response> registerUser(@RequestBody Request<User> request, HttpServletRequest httpRequest) {
@@ -98,7 +98,7 @@ public class UserManagmentController {
 	    		.body(userService.createUser(request.getBody())).build();
 	        return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
-	
+	*/
 	@PostMapping(value = "/isUserExists")
 	// Add anotation for request sevirity (for audit perpuses)
 	public ResponseEntity<Response> isUserExists(@RequestBody Request<LoginUser> request,  HttpServletRequest httpRequest) {
