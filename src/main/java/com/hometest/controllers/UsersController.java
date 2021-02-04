@@ -5,6 +5,7 @@ package com.hometest.controllers;
 
 import com.hometest.dto.EntityId;
 import com.hometest.dto.SignupDto;
+import com.hometest.mybatis.domain.ChangePassword;
 import com.hometest.mybatis.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,5 +69,10 @@ public class UsersController {
 		entityId.setId(user.getUserId());
 		return entityId;
 	}
-	
+
+	@PostMapping(value = "/users/changePassword")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void changePassword(@RequestBody ChangePassword request){
+		userService.changeUserPassword(request);
+	}
 }
