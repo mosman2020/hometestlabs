@@ -202,4 +202,10 @@ public class UserDao implements UserMapper{
 		ChangeMobileRequest changeMobile = this.sqlSession.selectOne("getChangeMobileRequest", userId);
 		return false;
 	}
+
+	@Override
+	public boolean updateUserName(User user) {
+		int result = this.sqlSession.selectOne("updateUserName",user);
+		return 1 == result;
+	}
 }

@@ -186,7 +186,16 @@
 				updated_by = #{updateBy}
 			where user_name=#{userName}
 	</update>
-	
+
+
+	<update id="updateUserName">
+		update users
+		set user_name= #{userName},
+			updated_date = #{updateDate},
+			updated_by = #{updateBy}
+		where user_id=#{id}
+	</update>
+
 	<delete id="deleteExpiredOtp">
 		delete from passwords 
 		where 

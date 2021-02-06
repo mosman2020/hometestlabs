@@ -28,6 +28,8 @@ import com.hometest.mybatis.domain.UserPassword;
 import com.hometest.service.UserService;
 import com.hometest.utils.ErrorCodes;
 
+import javax.validation.Valid;
+
 /**
  * @author moosman
  *
@@ -197,7 +199,12 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public void changeUserEmail(String email) {
+		User user = authenticationService.getUser();
+		user.setUserName(email);
+		userDao.updateUserName(user);
 
+		// generate OTP
+		generateOtp(user.getUserId());
 	}
 
 	private void validateUsername(String userName){
