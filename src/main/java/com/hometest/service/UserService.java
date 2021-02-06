@@ -1,6 +1,5 @@
 package com.hometest.service;
 
-import com.hometest.dto.SignupDto;
 import com.hometest.mybatis.domain.*;
 
 public interface UserService {
@@ -27,5 +26,7 @@ public interface UserService {
 
     ChangeMobileRequest changeUserMobile(ChangeMobileRequest mobile);
 
-    User signup(SignupDto request);
+    User signup(User request);
+
+    void changeUserEmail(String email);
 }

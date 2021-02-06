@@ -132,7 +132,7 @@
 	
 	<insert id="insertUser" useGeneratedKeys="true" parameterType="com.hometest.mybatis.domain.User" keyColumn="user_id" keyProperty="userId">
 		INSERT INTO users (user_name,user_status,user_type,prefered_language,profile_id,created_date,created_by) 
-		values(#{userName},#{userStatus},#{userType},#{preferedLanguage},#{profile.profileId},#{createdDate},#{createdBy})
+		values(#{userName},'C','INDV',#{preferedLanguage},#{profile.profileId},#{createdDate},#{createdBy})
 	</insert>
 	
 	<insert id="insertUserPassword" parameterType="com.hometest.mybatis.domain.UserPassword">
