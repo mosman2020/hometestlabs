@@ -6,8 +6,7 @@ package com.hometest.service.imp;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import com.hometest.dto.SignupDto;
-import com.hometest.enums.UserType;
+import com.hometest.service.AuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,8 @@ import com.hometest.mybatis.domain.UserPassword;
 import com.hometest.service.UserService;
 import com.hometest.utils.ErrorCodes;
 
+import javax.validation.Valid;
+
 /**
  * @author moosman
  *
@@ -38,6 +39,9 @@ public class UserServiceImp implements UserService {
 
 	@Autowired
 	UserDao userDao;
+
+	@Autowired
+	AuthenticationService authenticationService;
 	
 	
 	private Logger logger = LoggerFactory.getLogger(UserServiceImp.class);
@@ -99,7 +103,7 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public boolean verifyUser(Long userid,String otp) {
-		// TODO Auto-generated method stub
+
 		logger.info("verify user");
 		UserPassword password = userDao.getUserValidOtp(userid);
 		logger.info("password : "+password);
@@ -132,7 +136,6 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public boolean changeUserPassword(ChangePassword changepassword) {
-		// TODO Auto-generated method stub
 		PasswordEncoder passencoder = new BCryptPasswordEncoder();
 		User user = userDao.getUserByUsername(changepassword.getUserName());
 		logger.info("old passowrd      :"+changepassword.getOldPassword()+":");
@@ -154,7 +157,7 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public boolean updateUserProfile(Profile profile) {
-		// TODO Auto-generated method stub
+
 		logger.info("birth date : "+profile.getDateBirth());
 		User retrivedUser = userDao.getUserByProfile(profile.getProfileId());
 		logger.info("retrivie user : "+retrivedUser);
@@ -168,43 +171,44 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public ChangeMobileRequest changeUserMobile(ChangeMobileRequest mobile) {
+		Long userId = authenticationService.getUser().getUserId();
 		mobile.setStatus(ChangeMobileStatus.PENDING.getValue());
 		mobile.setCreatedBy((long)1);
 		mobile.setCreatedDate(new Date());
 		mobile.setType(ChangeMobileType.MOBILE.getValue());
-		boolean b = userDao.deletePendingChangeMobileRequest(mobile.getUserId());
+		boolean b = userDao.deletePendingChangeMobileRequest(userId);
 		logger.info("pending requests deleted : "+b);
 		int requestId = userDao.changeMobile(mobile);
+
+		// generate OTP
+		generateOtp(userId);
 		return mobile;
 	}
 
 	@Override
-	public User signup(SignupDto request) {
+	public User signup(User request) {
 
-		if(isUserExists(request.getUserName()))
-			throw new BusinessException("User already exist");
+		validateUsername(request.getUserName());
 
-		Profile profile = new Profile();
-		profile.setFirstName(request.getFirstName());
-		profile.setMiddleName(request.getMiddleName());
-		profile.setFamilyName(request.getFamilyName());
-		profile.setTitle(request.getTitle());
-		profile.setGender(request.getGender());
-		profile.setMobile(request.getMobile());
-
-		UserPassword password = new UserPassword();
-		password.setPasswordValue(request.getPassword());
-		password.setPasswordType("permanent");
-
-		User user = new User();
-		user.setUserName(request.getUserName());
-		user.setUserStatus(UserStatus.CREATED.getValue());
-		user.setProfile(profile);
-		user.setUserType(UserType.INDIVIDUAL.getValue());
-		user.setPassword(password);
-
-		userDao.createUser(user);
-		return user;
+		request.getPassword().setPasswordType("permanent");
+		userDao.createUser(request);
+		// generate OTP
+		generateOtp(request.getUserId());
+		return request;
 	}
 
+	@Override
+	public void changeUserEmail(String email) {
+		User user = authenticationService.getUser();
+		user.setUserName(email);
+		userDao.updateUserName(user);
+
+		// generate OTP
+		generateOtp(user.getUserId());
+	}
+
+	private void validateUsername(String userName){
+		if(isUserExists(userName))
+			throw new BusinessException(ErrorCodes.USER_EXISTS, new String []{userName});
+	}
 }

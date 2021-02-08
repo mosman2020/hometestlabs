@@ -39,6 +39,7 @@ public interface UserMapper {
 	boolean activateUser(Long userid);
 	int changeMobile(ChangeMobileRequest mobile);	
 	boolean deletePendingChangeMobileRequest(Long userid);
-	public boolean getChangeMobileRequest(Long userid);
-	public boolean verifyMobile(Long userId) ;
+	boolean getChangeMobileRequest(Long userid);
+	boolean verifyMobile(Long userId) ;
+	boolean updateUserName(User user);
 }

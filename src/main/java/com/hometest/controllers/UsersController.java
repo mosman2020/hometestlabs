@@ -4,8 +4,9 @@
 package com.hometest.controllers;
 
 import com.hometest.dto.EntityId;
-import com.hometest.dto.SignupDto;
+import com.hometest.mybatis.domain.ChangeMobileRequest;
 import com.hometest.mybatis.domain.ChangePassword;
+import com.hometest.mybatis.domain.Profile;
 import com.hometest.mybatis.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.hometest.model.res.Response;
 import com.hometest.model.res.TokenData;
-import com.hometest.service.MessageService;
 import com.hometest.service.UserService;
 
 /**
@@ -26,9 +26,7 @@ import com.hometest.service.UserService;
 @RestController
 @RequestMapping("/api/v1")
 public class UsersController {
-	@Autowired
-	MessageService messageService;
-		
+
 	@Autowired
 	UserService userService;
 
@@ -63,7 +61,7 @@ public class UsersController {
 	}
 	@PostMapping(value = "/users/signup")
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public EntityId<Long> signup(@RequestBody SignupDto request){
+	public EntityId<Long> signup(@RequestBody User request){
 		EntityId<Long> entityId = new EntityId<Long>();
 		User user = userService.signup(request);
 		entityId.setId(user.getUserId());
@@ -74,5 +72,23 @@ public class UsersController {
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void changePassword(@RequestBody ChangePassword request){
 		userService.changeUserPassword(request);
+	}
+
+	@PostMapping(value = "/users/updateprofile")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void updateProfile(@PathVariable Long id, @RequestBody Profile request){
+		userService.updateUserProfile(request);
+	}
+
+	@PostMapping(value = "/users/changemobile")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void changeMobileNumber(@RequestBody ChangeMobileRequest request){
+		userService.changeUserMobile(request);
+	}
+
+	@PostMapping(value = "/users/changeemail")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void changeEmail(@RequestBody String email){
+		userService.changeUserEmail(email);
 	}
 }

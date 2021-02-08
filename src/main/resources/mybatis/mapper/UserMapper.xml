@@ -132,7 +132,7 @@
 	
 	<insert id="insertUser" useGeneratedKeys="true" parameterType="com.hometest.mybatis.domain.User" keyColumn="user_id" keyProperty="userId">
 		INSERT INTO users (user_name,user_status,user_type,prefered_language,profile_id,created_date,created_by) 
-		values(#{userName},#{userStatus},#{userType},#{preferedLanguage},#{profile.profileId},#{createdDate},#{createdBy})
+		values(#{userName},'C','INDV',#{preferedLanguage},#{profile.profileId},#{createdDate},#{createdBy})
 	</insert>
 	
 	<insert id="insertUserPassword" parameterType="com.hometest.mybatis.domain.UserPassword">
@@ -186,7 +186,16 @@
 				updated_by = #{updateBy}
 			where user_name=#{userName}
 	</update>
-	
+
+
+	<update id="updateUserName">
+		update users
+		set user_name= #{userName},
+			updated_date = #{updateDate},
+			updated_by = #{updateBy}
+		where user_id=#{id}
+	</update>
+
 	<delete id="deleteExpiredOtp">
 		delete from passwords 
 		where 
