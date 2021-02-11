@@ -41,5 +41,5 @@ public interface UserMapper {
 	boolean deletePendingChangeMobileRequest(Long userid);
 	boolean getChangeMobileRequest(Long userid);
 	boolean verifyMobile(Long userId) ;
-	boolean updateUserName(User user);
+	boolean updateUserName(User user, String email);
 }

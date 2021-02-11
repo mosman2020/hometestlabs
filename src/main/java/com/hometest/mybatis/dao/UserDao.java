@@ -204,8 +204,16 @@ public class UserDao implements UserMapper{
 	}
 
 	@Override
-	public boolean updateUserName(User user) {
-		int result = this.sqlSession.selectOne("updateUserName",user);
+	public boolean updateUserName(User user, String email) {
+
+		Map<String, Object> updateVariables = new HashMap<>();
+
+		updateVariables.put("userName", email);
+		updateVariables.put("updatedBy", user.getUserId());
+		updateVariables.put("userId", user.getUserId());
+		updateVariables.put("updateDate", new Date());
+
+		int result = this.sqlSession.update("updateUserName",updateVariables);
 		return 1 == result;
 	}
 }

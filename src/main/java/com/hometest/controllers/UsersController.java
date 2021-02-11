@@ -76,7 +76,7 @@ public class UsersController {
 
 	@PostMapping(value = "/users/updateprofile")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void updateProfile(@PathVariable Long id, @RequestBody Profile request){
+	public void updateProfile(@RequestBody Profile request){
 		userService.updateUserProfile(request);
 	}
 
