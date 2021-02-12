@@ -3,30 +3,29 @@
  */
 package com.hometest.controllers;
 
-import com.hometest.dto.EntityId;
-import com.hometest.mybatis.domain.ChangeMobileRequest;
-import com.hometest.mybatis.domain.ChangePassword;
-import com.hometest.mybatis.domain.Profile;
-import com.hometest.mybatis.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.hometest.model.res.ErrorData;
+import com.hometest.dto.EntityId;
 import com.hometest.model.res.Response;
 import com.hometest.model.res.TokenData;
+import com.hometest.mybatis.domain.ChangeMobileRequest;
+import com.hometest.mybatis.domain.ChangePassword;
+import com.hometest.mybatis.domain.Profile;
+import com.hometest.mybatis.domain.User;
 import com.hometest.service.AuthenticationService;
 import com.hometest.service.UserService;
-import com.hometest.service.imp.UserDetailsImpl;
 import com.hometest.utils.ErrorCodes;
 
 /**
