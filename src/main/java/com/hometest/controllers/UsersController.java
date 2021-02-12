@@ -13,11 +13,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import com.hometest.model.res.ErrorData;
 import com.hometest.model.res.Response;
 import com.hometest.model.res.TokenData;
+import com.hometest.service.AuthenticationService;
 import com.hometest.service.UserService;
+import com.hometest.service.imp.UserDetailsImpl;
+import com.hometest.utils.ErrorCodes;
 
 /**
  * @author hometest
@@ -29,12 +39,19 @@ public class UsersController {
 
 	@Autowired
 	UserService userService;
-
+	
+	@Autowired
+	AuthenticationService authenticationService;
+	
 	private Logger logger = LoggerFactory.getLogger(UsersController.class);
 	
 	@GetMapping(value = "/users/{id}")
 	public ResponseEntity<Response> getByUserId( @PathVariable Long id){
 		logger.info("userid : "+id);
+		User user = authenticationService.getUser();
+		if(id!=user.getUserId()) {
+			throw new InsufficientAuthenticationException(ErrorCodes.INSUFFICIENT_PRIVILEGES);
+		}
 		 return ResponseEntity.status(HttpStatus.OK).body(Response.builder().payload(userService.getByUserId(id)).build());
 	}
 	
@@ -76,7 +93,7 @@ public class UsersController {
 
 	@PostMapping(value = "/users/updateprofile")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void updateProfile(@PathVariable Long id, @RequestBody Profile request){
+	public void updateProfile(@RequestBody Profile request){
 		userService.updateUserProfile(request);
 	}
 

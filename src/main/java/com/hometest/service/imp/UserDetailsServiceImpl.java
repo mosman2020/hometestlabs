@@ -24,15 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
 		logger.info("username from loadUserByUsername {}:"+username);
-		
 		User user = userDao.getUserByUsername(username);
 		if(user ==null)
 			throw new UsernameNotFoundException("User Not Found");
-		if(UserStatus.CREATED.getValue().equals(user.getUserStatus())|| userDao.getChangeMobileRequest(user.getUserId()))
-			user.setMobileVerified(false);
-		else
-			user.setMobileVerified(true);
-		
 		return new UserDetailsImpl(user);
 	}
 

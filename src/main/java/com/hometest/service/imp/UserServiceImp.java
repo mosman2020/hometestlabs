@@ -53,7 +53,7 @@ public class UserServiceImp implements UserService {
 	
 	@Override
 	public User getByUserId(Long userid) {
-		if(userDao.isUserExists(userid))
+		if(!userDao.isUserExists(userid))
 			throw new BusinessException(ErrorCodes.NO_DATA_FOUND);
 		return userDao.getUserByUserid(userid);
 	}
@@ -157,12 +157,12 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public boolean updateUserProfile(Profile profile) {
-
+		Long userId = authenticationService.getUser().getUserId();
 		logger.info("birth date : "+profile.getDateBirth());
-		User retrivedUser = userDao.getUserByProfile(profile.getProfileId());
+		User retrivedUser = userDao.getUserByUserid(userId);
 		logger.info("retrivie user : "+retrivedUser);
 		if(retrivedUser!=null && UserStatus.ACTIVE.getValue().equals(retrivedUser.getUserStatus())) {
-			profile.setUpdatedBy((long)1);
+			profile.setUpdatedBy(userId);
 			profile.setUpdatedDate(new Date());
 			return userDao.updateUserProfile(profile);
 		}
@@ -201,7 +201,7 @@ public class UserServiceImp implements UserService {
 	public void changeUserEmail(String email) {
 		User user = authenticationService.getUser();
 		user.setUserName(email);
-		userDao.updateUserName(user);
+		userDao.updateUserName(user, email);
 
 		// generate OTP
 		generateOtp(user.getUserId());

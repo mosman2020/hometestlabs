@@ -5,6 +5,7 @@ package com.hometest.mybatis.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -65,5 +66,7 @@ public class Profile extends Audit implements Serializable {
 	
 	@ValidEnum(enumClazz = Title.class)
 	private String title;
-	
+
+	private List<Address> addresses;
+
 }

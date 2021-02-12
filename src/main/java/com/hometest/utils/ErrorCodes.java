@@ -72,6 +72,7 @@ public class ErrorCodes {
 		public static final String INVALID_JSON_OBJECT = "E100001";
 		public static final String ACCESS_DENIED = "E100002";
 		public static final String NOT_FOUND = "E100003";
+		public static final String INSUFFICIENT_PRIVILEGES = "E100004";
 	
 	//CATEGORY-2 VALIDATION ERRORS
 	public static final String VALIDATION_ERROR = "E200000";
