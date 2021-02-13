@@ -3,13 +3,8 @@
  */
 package com.hometest.mybatis.mapper;
 
+import com.hometest.mybatis.domain.*;
 import org.apache.ibatis.annotations.Mapper;
-
-import com.hometest.mybatis.domain.ChangeMobileRequest;
-import com.hometest.mybatis.domain.ChangePassword;
-import com.hometest.mybatis.domain.Profile;
-import com.hometest.mybatis.domain.User;
-import com.hometest.mybatis.domain.UserPassword;
 
 /**
  * @author moosman
@@ -43,4 +38,6 @@ public interface UserMapper {
 	boolean getChangeMobileRequest(Long userid);
 	boolean verifyMobile(Long userId) ;
 	boolean updateUserName(User user, String email);
+
+    boolean saveProfileAddress(Address address, Long profileId);
 }

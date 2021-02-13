@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.hometest.mybatis.domain.*;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +18,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hometest.mybatis.mapper.UserMapper;
-import com.hometest.mybatis.domain.ChangeMobileRequest;
-import com.hometest.mybatis.domain.ChangePassword;
-import com.hometest.mybatis.domain.Profile;
-import com.hometest.mybatis.domain.User;
-import com.hometest.mybatis.domain.UserPassword;
 
 /**
  * @author moosman
@@ -234,6 +230,27 @@ public class UserDao implements UserMapper{
 		updateVariables.put("id", user.getUserId());
 
 		int result = this.sqlSession.update("updateUserName",updateVariables);
+		return 1 == result;
+	}
+
+	@Override
+	public boolean saveProfileAddress(Address address, Long profileId) {
+		Map<String, Object> insertParameters = new HashMap<>();
+
+		insertParameters.put("addressLabel", address.getAddressLabel());
+		insertParameters.put("addressLine1", address.getAddressLine1());
+		insertParameters.put("addressLine2", address.getAddressLine2());
+		insertParameters.put("district", address.getDistrict());
+		insertParameters.put("city", address.getCity());
+		insertParameters.put("region", address.getRegion());
+		insertParameters.put("zipCode", address.getZipCode());
+		insertParameters.put("deliveryInstructions", address.getDeliveryInstructions());
+		insertParameters.put("geoLocationX", address.getGeoLocationX());
+		insertParameters.put("geoLocationY", address.getGeoLocationY());
+		insertParameters.put("isDefault", address.getIsDefault());
+		insertParameters.put("profileId", profileId);
+
+		int result = this.sqlSession.insert("insertAddress", insertParameters);
 		return 1 == result;
 	}
 }

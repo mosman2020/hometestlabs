@@ -4,8 +4,10 @@
 package com.hometest.service.imp;
 
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.hometest.mybatis.domain.*;
 import com.hometest.service.AuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,12 +21,6 @@ import com.hometest.enums.ChangeMobileType;
 import com.hometest.enums.UserStatus;
 import com.hometest.exceptionhandling.exception.BusinessException;
 import com.hometest.mybatis.dao.UserDao;
-import com.hometest.mybatis.domain.ChangeMobileRequest;
-import com.hometest.mybatis.domain.ChangePassword;
-import com.hometest.mybatis.domain.LoginUser;
-import com.hometest.mybatis.domain.Profile;
-import com.hometest.mybatis.domain.User;
-import com.hometest.mybatis.domain.UserPassword;
 import com.hometest.service.UserService;
 import com.hometest.utils.ErrorCodes;
 
@@ -165,9 +161,20 @@ public class UserServiceImp implements UserService {
 		if(retrivedUser!=null && UserStatus.ACTIVE.getValue().equals(retrivedUser.getUserStatus())) {
 			profile.setUpdatedBy(userId);
 			profile.setUpdatedDate(new Date());
-			return userDao.updateUserProfile(profile, userId);
+			boolean success =  userDao.updateUserProfile(profile, userId);
+			if(success){
+				saveProfileAddress(profile.getAddresses(), retrivedUser);
+			}
 		}
 		return false;
+	}
+
+	public boolean saveProfileAddress(List<Address> addresses, User user) {
+		Profile profile = userDao.getUserProfile(user);
+		for (Address address : addresses) {
+			userDao.saveProfileAddress(address, profile.getId());
+		}
+		return true;
 	}
 
 	@Override

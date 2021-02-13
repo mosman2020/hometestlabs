@@ -1,9 +1,11 @@
 package com.hometest.mybatis.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -25,5 +27,8 @@ public class Address  extends Audit implements Serializable {
     private String deliveryInstructions;
     private String geoLocationX;
     private String geoLocationY;
-    private Long profile;
+    private Object isDefault;
+    @NotNull
+    @JsonIgnore
+    private Long profileId;
 }

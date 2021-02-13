@@ -121,6 +121,7 @@
 		<association property="password" resultMap="passwordMap" />
 	</resultMap>
 	<resultMap id="profileMap" type="com.hometest.mybatis.domain.Profile" >
+		<result property="id" column="id" />
 		<result property="firstName" column="first_name" />
 		<result property="middleName" column="middle_name" />
 		<result property="familyName" column="family_name" />
@@ -137,7 +138,21 @@
 		<result property="retryCount" column="retry_count" />
 		<result property="expiryDate" column="expiry_date" />
 	</resultMap>
-	
+	<resultMap id="addressMap" type="com.hometest.mybatis.domain.Address" >
+		<result property="id" column="id" />
+		<result property="addressLabel" column="address_label" />
+		<result property="addressLine1" column="address_line1" />
+		<result property="addressLine2" column="address_line2" />
+		<result property="district" column="district" />
+		<result property="city" column="city" />
+		<result property="region" column="region" />
+		<result property="zipCode" column="zip_code" />
+		<result property="deliveryInstructions" column="delivery_instructions" />
+		<result property="isDefault" column="is_default" />
+		<result property="geoLocationY" column="geo_location_y" />
+		<result property="geoLocationY" column="geo_location_y" />
+		<result property="profileId" column="profile_id" />
+	</resultMap>
 	<insert id="insertUser" useGeneratedKeys="true" parameterType="com.hometest.mybatis.domain.User" keyColumn="user_id" keyProperty="userId">
 		INSERT INTO users (user_name,user_status,user_type,prefered_language,profile_id,created_date,created_by) 
 		values(#{userName},'C','INDV',#{preferedLanguage},#{profile.profileId},#{createdDate},#{createdBy})
@@ -147,12 +162,17 @@
 		INSERT INTO passwords (password_value,password_type, user_id, expiry_date,created_date,created_by)
 		values(#{passwordValue}, #{passwordType},#{userId}, #{expiryDate},#{createdDate},#{createdBy})
 	</insert>
-	
+
 	<insert id="insertUserProfile" parameterType="com.hometest.mybatis.domain.Profile" useGeneratedKeys="true" keyColumn="id" keyProperty="profileId">
-		INSERT INTO profiles (first_name,middle_name,family_name,gender,mobile,title,date_birth,created_date,created_by) 
+		INSERT INTO profiles (first_name,middle_name,family_name,gender,mobile,title,date_birth,created_date,created_by)
 		VALUES (#{firstName},#{middleName},#{familyName},#{gender},#{mobile},#{title},#{dateBirth},#{createdDate},#{createdBy})
 	</insert>
-	
+
+	<insert id="insertAddress" parameterType="com.hometest.mybatis.domain.Address" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		INSERT INTO addresses (address_label, address_line_1, address_line_2, district, city, region, zip_code, delivery_instructions, is_default, geo_location_x, geo_location_y, profile_id)
+		VALUES (#{addressLabel},#{addressLine1},#{addressLine2},#{district},#{city},#{region},#{zipCode},#{deliveryInstructions},#{isDefault},#{geoLocationX},#{geoLocationY},#{profileId})
+	</insert>
+
 	<update id="updateUserProfile">
 		update profiles
 		set 
