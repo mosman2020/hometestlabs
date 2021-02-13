@@ -28,6 +28,8 @@ import com.hometest.service.AuthenticationService;
 import com.hometest.service.UserService;
 import com.hometest.utils.ErrorCodes;
 
+import java.util.Map;
+
 /**
  * @author hometest
  *
@@ -104,7 +106,7 @@ public class UsersController {
 
 	@PostMapping(value = "/users/changeemail")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void changeEmail(@RequestBody String email){
-		userService.changeUserEmail(email);
+	public void changeEmail(@RequestBody Map<String, String> email){
+		userService.changeUserEmail(email.get("email"));
 	}
 }
