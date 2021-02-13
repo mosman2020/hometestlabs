@@ -1,0 +1,214 @@
+{
+	"info": {
+		"_postman_id": "e1f5bcac-18b9-4052-9df6-159b27fb9a92",
+		"name": "HomeTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Change mobile number",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMjYzNzk1NiwiZXhwIjoxNjEzNTAxOTU2fQ.f8EmFi1fA9uV_X_K2AtAdmRzAUAG2avkYKtFsG9W5tx32Zm8FfqpKcTJpamCdgyOxIUlyZki50gy2rFw2f4eEA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"firstName\":\"Bassam\",\n    \"middleName\":\"Mostafa\",\n    \"familyName\":\"Lashen\",\n    \"title\":\"Mr.\",\n    \"gender\":\"M\",\n    \"birthDate\":\"1980-01-01\",\n    \"mobile\":\"64564456\",\n    \"userName\":\"Bassam\",\n    \"preferedLanguage\":\"ar\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8095/hometestlabs/api/v1/users/changemobile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8095",
+							"path": [
+								"hometestlabs",
+								"api",
+								"v1",
+								"users",
+								"changemobile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMzI0MjkxNSwiZXhwIjoxNjE0MTA2OTE1fQ.-Sbtk40Vqrr3tYnFkqeLIc4tBsc4w8q_U1oHVF73v_Dd0RT72SXu2jeUGPL4cyOViJk7_ggd-b_SMFp9eKHd2A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Bassam\",\n    \"middleName\": \"Mostafa\",\n    \"familyName\": \"Lashen\",\n    \"title\": \"Mr\",\n    \"gender\": \"M\",\n    \"birthDate\": \"1980-01-01\",\n    \"mobile\": \"+966564262600\",\n    \"userName\": \"Bassam\",\n    \"preferedLanguage\": \"ar\",\n    \"addresses\": [\n        {\n            \"addressLabel\": \"addressLabel\",\n            \"addressLine1\": \"addressLine1\",\n            \"addressLine2\": \"addressLine2\",\n            \"district\": \"district\",\n            \"city\": \"\",\n            \"region\": \"\",\n            \"zipCode\": \"\",\n            \"deliveryInstructions\": \"\",\n            \"geoLocationX\": \"\",\n            \"geoLocationY\": \"\"\n        },\n        {\n            \"addressLabel\": \"addressLabel22\",\n            \"addressLine1\": \"addressLine1\",\n            \"addressLine2\": \"addressLine2\",\n            \"district\": \"district\",\n            \"city\": \"\",\n            \"region\": \"\",\n            \"zipCode\": \"\",\n            \"deliveryInstructions\": \"\",\n            \"geoLocationX\": \"\",\n            \"geoLocationY\": \"\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8095/hometestlabs/api/v1/users/updateprofile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8095",
+							"path": [
+								"hometestlabs",
+								"api",
+								"v1",
+								"users",
+								"updateprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\":\"mosman10@hotmail.com\",\n    \"password\":\"rEEm2010\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8095/hometestlabs/api/v1/users/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8095",
+							"path": [
+								"hometestlabs",
+								"api",
+								"v1",
+								"users",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users/changeemail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMjYzNzk1NiwiZXhwIjoxNjEzNTAxOTU2fQ.f8EmFi1fA9uV_X_K2AtAdmRzAUAG2avkYKtFsG9W5tx32Zm8FfqpKcTJpamCdgyOxIUlyZki50gy2rFw2f4eEA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"email@sample.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8095/hometestlabs/api/v1/users/changeemail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8095",
+							"path": [
+								"hometestlabs",
+								"api",
+								"v1",
+								"users",
+								"changeemail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users/changemobile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMjYzNzk1NiwiZXhwIjoxNjEzNTAxOTU2fQ.f8EmFi1fA9uV_X_K2AtAdmRzAUAG2avkYKtFsG9W5tx32Zm8FfqpKcTJpamCdgyOxIUlyZki50gy2rFw2f4eEA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"oldValue\":\"+966564262600\",\n    \"newValue\":\"+966564262601\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8095/hometestlabs/api/v1/users/changemobile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8095",
+							"path": [
+								"hometestlabs",
+								"api",
+								"v1",
+								"users",
+								"changemobile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
