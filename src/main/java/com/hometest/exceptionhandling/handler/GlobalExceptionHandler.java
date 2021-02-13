@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 
+import org.apache.ibatis.session.SqlSessionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.google.common.base.Throwables;
 import com.hometest.enums.Language;
 import com.hometest.exceptionhandling.exception.BusinessException;
 import com.hometest.exceptionhandling.exception.ValidationException;
@@ -56,9 +59,10 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler()
 	@ResponseStatus(HttpStatus.EXPECTATION_FAILED)
 	public ResponseEntity<ErrorData> handleGeneralExceptions(Exception ex, HttpServletRequest httpRequest) {
-		logger.error("JSON Parse Exception : "+ex.getMessage());
+		logger.error("General Exception : "+ex.getMessage());
 		ex.printStackTrace();
-		ErrorData errorData = ErrorData.builder().code(ErrorCodes.INTERNAL_SYSTEM_ERROR).type(messageService.getMessage(ErrorCodes.INTERNAL_SYSTEM_ERROR)).message(ex.getMessage()).build();
+		Throwable trhowable = Throwables.getRootCause(ex);
+		ErrorData errorData = ErrorData.builder().code(ErrorCodes.INTERNAL_SYSTEM_ERROR).type(messageService.getMessage(ErrorCodes.INTERNAL_SYSTEM_ERROR)).message(trhowable.getMessage()).build();
 		return ResponseEntity.badRequest().body(errorData);
 	}
 
@@ -101,7 +105,6 @@ public class GlobalExceptionHandler {
 		
 	}
 
-	@SuppressWarnings("rawtypes")
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseEntity<ErrorData> handleJsonParseException(HttpMessageNotReadableException ex) {
@@ -113,7 +116,6 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.badRequest().body(errorData);
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@ExceptionHandler(BusinessException.class)
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	public ResponseEntity<ErrorData> handleBusinessExceptions(BusinessException ex, HttpServletRequest httpRequest) {
@@ -136,23 +138,27 @@ public class GlobalExceptionHandler {
 		
 		ErrorData errorData = ErrorData.builder().code(ErrorCodes.GENERIC_FAILURE_ERROR).Errors(errors).type(messageService.getMessage(ErrorCodes.GENERIC_FAILURE_ERROR)).message(ex.getMessage()).build();
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(new HttpHeaders()).body(errorData);
-		
-	  
 	}
 	
-/*
-	@ExceptionHandler(ResourceAccessException.class)
-	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Response> handleResourceAccessExceptionException(ResourceAccessException exception,HttpServletRequest httpRequest) {
-		logger.info("-----------------------handleResourceAccessExceptionException--------------------");
-		return handleGeneralExceptions(exception,httpRequest);
+	
+	@ExceptionHandler()
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	public ResponseEntity<ErrorData> handleAuthenticationException(AuthenticationException ex) {
+		logger.error("AuthenticationException Exception : "+ex.getMessage());
+		ex.printStackTrace();
+		ErrorData errorData = ErrorData.builder().code(ErrorCodes.ACCESS_DENIED)
+				.type(messageService.getMessage(ErrorCodes.ACCESS_DENIED))
+				.message(messageService.getMessage(ex.getMessage())).build();
+		return ResponseEntity.badRequest().body(errorData);
 	}
-
-	@ExceptionHandler(HttpClientErrorException.class)
-	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Response>  handleHttpClientErrorException(HttpClientErrorException exception,HttpServletRequest httpRequest) {
-		logger.info("------------------------------Http client exception--------------------------");
-		return handleGeneralExceptions(exception,httpRequest);
+	
+	@ExceptionHandler()
+	@ResponseStatus(HttpStatus.EXPECTATION_FAILED)
+	public ResponseEntity<ErrorData> handleSqlSessionException(SqlSessionException ex) {
+		logger.error("SqlSessionException Exception : "+ex.getMessage());
+		ex.printStackTrace();
+		ErrorData errorData = ErrorData.builder().code(ErrorCodes.INTERNAL_SYSTEM_ERROR).type(messageService.getMessage(ErrorCodes.INTERNAL_SYSTEM_ERROR)).message(ex.getMessage()).build();
+		return ResponseEntity.badRequest().body(errorData);
 	}
-*/
+	
 }

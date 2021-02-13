@@ -53,7 +53,7 @@ public class UserServiceImp implements UserService {
 	
 	@Override
 	public User getByUserId(Long userid) {
-		if(userDao.isUserExists(userid))
+		if(!userDao.isUserExists(userid))
 			throw new BusinessException(ErrorCodes.NO_DATA_FOUND);
 		return userDao.getUserByUserid(userid);
 	}
