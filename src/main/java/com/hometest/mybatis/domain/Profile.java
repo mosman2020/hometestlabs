@@ -37,7 +37,7 @@ public class Profile extends Audit implements Serializable {
 
 	private static final long serialVersionUID = -4907565211226801900L;
 	
-	private Long profileId;
+	private Long id;
 	
 	@Past
 	@JsonFormat(shape = JsonFormat.Shape.STRING,  pattern = "mm-dd-yyyy")

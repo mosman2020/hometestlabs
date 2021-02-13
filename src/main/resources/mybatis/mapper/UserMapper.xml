@@ -79,7 +79,7 @@
 	<select id="getUserByUserid" resultMap="userMap" >
 		select *
 			from users usr
-			inner join profiles prof on usr.profile_id = prof.profile_id
+			inner join profiles prof on usr.profile_id = prof.id
 			inner join passwords pass on usr.user_id = pass.user_id
 			where
 			usr.user_id = #{userId}
@@ -96,6 +96,14 @@
 			where
 			usr.user_name = #{userName}
 			and pass.password_type='permanent'
+	</select>
+	<select id="getUserProfile" resultMap="profileMap">
+		select
+			prof.*
+		from users usr
+				 inner join profiles prof on usr.profile_id = prof.id
+		where
+			usr.user_id = #{userId}
 	</select>
 	<resultMap id="userMap2" type="com.hometest.mybatis.domain.User" autoMapping="true">
 		<association property="profile"  javaType="com.hometest.mybatis.domain.Profile" autoMapping="true"/>
@@ -140,7 +148,7 @@
 		values(#{passwordValue}, #{passwordType},#{userId}, #{expiryDate},#{createdDate},#{createdBy})
 	</insert>
 	
-	<insert id="insertUserProfile" parameterType="com.hometest.mybatis.domain.Profile" useGeneratedKeys="true" keyColumn="profile_id" keyProperty="profileId">
+	<insert id="insertUserProfile" parameterType="com.hometest.mybatis.domain.Profile" useGeneratedKeys="true" keyColumn="id" keyProperty="profileId">
 		INSERT INTO profiles (first_name,middle_name,family_name,gender,mobile,title,date_birth,created_date,created_by) 
 		VALUES (#{firstName},#{middleName},#{familyName},#{gender},#{mobile},#{title},#{dateBirth},#{createdDate},#{createdBy})
 	</insert>
@@ -151,7 +159,7 @@
 		first_name=#{firstName} , middle_name=#{middleName} ,family_name=#{familyName} , title=#{title}, gender=#{gender}
 		,date_birth=#{dateBirth},updated_by=#{updatedBy},updated_date=#{updatedDate}
 		where
-		profile_id=#{profileId}
+		id=#{profileId}
 	</update>
 	
 	<insert id="saveUserOtp" useGeneratedKeys="true" keyColumn="password_id" keyProperty="passwordId" parameterType="com.hometest.mybatis.domain.UserPassword">

@@ -20,8 +20,9 @@ public interface UserMapper {
 	
 	UserPassword getUserValidOtp(Long userid);
 	UserPassword saveUserOtp(UserPassword userpassword);
-	
+
 	User getUserByUsername(String username);
+	Profile getUserProfile(User user);
 	User getUserByUserid(Long userid);
 	public int isUserExists(String username);
 	public boolean isUserExists(Long userid) ;
@@ -29,7 +30,7 @@ public interface UserMapper {
 	boolean updateUserLoginDetails(User user);
 	boolean updateOtpRetrycount(Long userid);
 	
-	boolean updateUserProfile(Profile profile);
+	boolean updateUserProfile(Profile profile, Long userId);
 	boolean changeUserPassword(ChangePassword changepassword);
 	
 	int createUser(User user);

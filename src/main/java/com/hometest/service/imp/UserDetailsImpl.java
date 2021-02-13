@@ -32,13 +32,11 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return user.getPassword().getPasswordValue();
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return user.getUserName();
 	}
 
@@ -50,19 +48,16 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return  !UserStatus.LOCKED.getValue().equals(user.getUserStatus());
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return user.getPassword().getExpiryDate()!=null?user.getPassword().getExpiryDate().after(new Date()):true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return !UserStatus.DISABLED.getValue().equals(user.getUserStatus());
 	}
 

@@ -157,14 +157,15 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public boolean updateUserProfile(Profile profile) {
-		Long userId = authenticationService.getUser().getUserId();
+		User user = authenticationService.getUser();
+		Long userId = user.getUserId();
 		logger.info("birth date : "+profile.getDateBirth());
 		User retrivedUser = userDao.getUserByUserid(userId);
 		logger.info("retrivie user : "+retrivedUser);
 		if(retrivedUser!=null && UserStatus.ACTIVE.getValue().equals(retrivedUser.getUserStatus())) {
 			profile.setUpdatedBy(userId);
 			profile.setUpdatedDate(new Date());
-			return userDao.updateUserProfile(profile);
+			return userDao.updateUserProfile(profile, userId);
 		}
 		return false;
 	}

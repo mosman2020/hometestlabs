@@ -41,7 +41,14 @@ public class UserDao implements UserMapper{
 		logger.info("user: "+user);
 		return user;
 	}
-	
+
+	@Override
+	public Profile getUserProfile(User user) {
+		Profile profile = this.sqlSession.selectOne("getUserProfile", user.getUserId());
+		logger.info("Profile:" + profile);
+		return profile;
+	}
+
 	@Override
 	public User getUserByUserid(Long userid) {
 		return this.sqlSession.selectOne("getUserByUserid", userid);
@@ -67,9 +74,22 @@ public class UserDao implements UserMapper{
 	}
 
 	@Override
-	public boolean updateUserProfile(Profile profile) {
+	public boolean updateUserProfile(Profile profile, Long userId) {
 		logger.info("update user profile");
-		return 1== this.sqlSession.update("updateUserProfile",profile);
+
+		Profile origProfile = getUserProfile(getUserByUserid(userId));
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("firstName", profile.getFirstName());
+		parameters.put("middleName", profile.getMiddleName());
+		parameters.put("familyName", profile.getFamilyName());
+		parameters.put("title", profile.getTitle());
+		parameters.put("gender", profile.getGender());
+		parameters.put("updatedBy", userId);
+		parameters.put("updatedDate", new Date());
+		parameters.put("profileId", origProfile.getId());
+
+
+		return 1== this.sqlSession.update("updateUserProfile",parameters);
 	}
 
 	@Override
