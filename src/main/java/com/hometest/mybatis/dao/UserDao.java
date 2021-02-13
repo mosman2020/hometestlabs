@@ -210,8 +210,8 @@ public class UserDao implements UserMapper{
 
 		updateVariables.put("userName", email);
 		updateVariables.put("updatedBy", user.getUserId());
-		updateVariables.put("userId", user.getUserId());
 		updateVariables.put("updateDate", new Date());
+		updateVariables.put("id", user.getUserId());
 
 		int result = this.sqlSession.update("updateUserName",updateVariables);
 		return 1 == result;
