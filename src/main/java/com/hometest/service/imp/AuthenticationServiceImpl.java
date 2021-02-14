@@ -23,4 +23,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         return null;
     }
+
+    @Override
+    public UserDetailsImpl getPrinciples() {
+        Object principal = getAuthentication().getPrincipal();
+        if(principal instanceof UserDetails){
+            return  (UserDetailsImpl)principal;
+        }
+        return null;
+    }
 }

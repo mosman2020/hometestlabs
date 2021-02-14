@@ -3,6 +3,8 @@ package com.hometest.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.hometest.mybatis.dao.TokenDao;
+import com.hometest.service.AuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,12 @@ public class AuthController {
 	@Autowired
 	JwtUtils jwtUtils;
 
+	@Autowired
+	TokenDao tokenDao;
+
+	@Autowired
+	AuthenticationService authenticationService;
+
 	private Logger logger = LoggerFactory.getLogger(AuthController.class);
 	
 	@PostMapping("/auth")
@@ -66,5 +74,12 @@ public class AuthController {
 		return ResponseEntity.ok().body(Response.builder().payload(token).build());
 		
 	}
-	
+
+	@PostMapping("/logout")
+	public  void logout(){
+		TokenData tokenData = authenticationService.getPrinciples().getTokenData();
+		if(tokenData != null ){
+			tokenDao.insertToken(tokenData.getToken());
+		}
+	}
 }
