@@ -24,8 +24,6 @@ import com.hometest.mybatis.dao.UserDao;
 import com.hometest.service.UserService;
 import com.hometest.utils.ErrorCodes;
 
-import javax.validation.Valid;
-
 /**
  * @author moosman
  *
@@ -161,7 +159,8 @@ public class UserServiceImp implements UserService {
 		if(retrivedUser!=null && UserStatus.ACTIVE.getValue().equals(retrivedUser.getUserStatus())) {
 			profile.setUpdatedBy(userId);
 			profile.setUpdatedDate(new Date());
-			boolean success =  userDao.updateUserProfile(profile, userId);
+			profile.setId(userDao.getUserProfile(user).getId());
+			boolean success =  userDao.updateUserProfile(profile);
 			if(success){
 				saveProfileAddress(profile.getAddresses(), retrivedUser);
 			}

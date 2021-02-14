@@ -173,13 +173,13 @@
 		VALUES (#{addressLabel},#{addressLine1},#{addressLine2},#{district},#{city},#{region},#{zipCode},#{deliveryInstructions},#{isDefault},#{geoLocationX},#{geoLocationY},#{profileId})
 	</insert>
 
-	<update id="updateUserProfile">
+	<update id="updateUserProfile" parameterType="com.hometest.mybatis.domain.Profile" >
 		update profiles
 		set 
 		first_name=#{firstName} , middle_name=#{middleName} ,family_name=#{familyName} , title=#{title}, gender=#{gender}
 		,date_birth=#{dateBirth},updated_by=#{updatedBy},updated_date=#{updatedDate}
 		where
-		id=#{profileId}
+		id=#{id}
 	</update>
 	
 	<insert id="saveUserOtp" useGeneratedKeys="true" keyColumn="password_id" keyProperty="passwordId" parameterType="com.hometest.mybatis.domain.UserPassword">

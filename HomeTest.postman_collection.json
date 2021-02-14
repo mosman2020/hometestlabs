@@ -58,7 +58,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMzI0MjkxNSwiZXhwIjoxNjE0MTA2OTE1fQ.-Sbtk40Vqrr3tYnFkqeLIc4tBsc4w8q_U1oHVF73v_Dd0RT72SXu2jeUGPL4cyOViJk7_ggd-b_SMFp9eKHd2A",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMzMxMjA3NSwiZXhwIjoxNjE0MTc2MDc1fQ.M8CIa_CLQALQCkL4kFdxPjS2VubsYhmhl3YF9mMq5LT2AsWl5zPq4eSnlLuwIIZtjlkHj7dDOtoxmD9adciZDw",
 									"type": "string"
 								}
 							]
@@ -75,7 +75,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8095/hometestlabs/api/v1/users/updateprofile",
+							"raw": "http://localhost:8095/hometestlabs/api/v1/users/75/updateprofile",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -86,6 +86,7 @@
 								"api",
 								"v1",
 								"users",
+								"75",
 								"updateprofile"
 							]
 						}
@@ -132,7 +133,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMjYzNzk1NiwiZXhwIjoxNjEzNTAxOTU2fQ.f8EmFi1fA9uV_X_K2AtAdmRzAUAG2avkYKtFsG9W5tx32Zm8FfqpKcTJpamCdgyOxIUlyZki50gy2rFw2f4eEA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMzIyNzQ4OSwiZXhwIjoxNjE0MDkxNDg5fQ.gfc7ixo0BffWJW6y67uQLYc2kaNmmUtK4Q4zpxTzxrp4fsVj0B7lZ-FDyUc_-X0ocTrOM7J5cmRb9aKGWbi8Cg",
 									"type": "string"
 								}
 							]
@@ -149,7 +150,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8095/hometestlabs/api/v1/users/changeemail",
+							"raw": "http://localhost:8095/hometestlabs/api/v1/users/{id}/changeemail",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -160,6 +161,7 @@
 								"api",
 								"v1",
 								"users",
+								"{id}",
 								"changeemail"
 							]
 						}
@@ -174,7 +176,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMjYzNzk1NiwiZXhwIjoxNjEzNTAxOTU2fQ.f8EmFi1fA9uV_X_K2AtAdmRzAUAG2avkYKtFsG9W5tx32Zm8FfqpKcTJpamCdgyOxIUlyZki50gy2rFw2f4eEA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMzMxMjA3NSwiZXhwIjoxNjE0MTc2MDc1fQ.M8CIa_CLQALQCkL4kFdxPjS2VubsYhmhl3YF9mMq5LT2AsWl5zPq4eSnlLuwIIZtjlkHj7dDOtoxmD9adciZDw",
 									"type": "string"
 								}
 							]
@@ -191,7 +193,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8095/hometestlabs/api/v1/users/changemobile",
+							"raw": "http://localhost:8095/hometestlabs/api/v1/users/{id}/changemobile",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -202,6 +204,7 @@
 								"api",
 								"v1",
 								"users",
+								"{id}",
 								"changemobile"
 							]
 						}

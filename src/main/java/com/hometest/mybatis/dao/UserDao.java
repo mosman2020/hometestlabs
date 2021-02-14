@@ -70,22 +70,9 @@ public class UserDao implements UserMapper{
 	}
 
 	@Override
-	public boolean updateUserProfile(Profile profile, Long userId) {
+	public boolean updateUserProfile(Profile profile) {
 		logger.info("update user profile");
-
-		Profile origProfile = getUserProfile(getUserByUserid(userId));
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("firstName", profile.getFirstName());
-		parameters.put("middleName", profile.getMiddleName());
-		parameters.put("familyName", profile.getFamilyName());
-		parameters.put("title", profile.getTitle());
-		parameters.put("gender", profile.getGender());
-		parameters.put("updatedBy", userId);
-		parameters.put("updatedDate", new Date());
-		parameters.put("profileId", origProfile.getId());
-
-
-		return 1== this.sqlSession.update("updateUserProfile",parameters);
+		return 1== this.sqlSession.update("updateUserProfile", profile);
 	}
 
 	@Override
@@ -235,22 +222,8 @@ public class UserDao implements UserMapper{
 
 	@Override
 	public boolean saveProfileAddress(Address address, Long profileId) {
-		Map<String, Object> insertParameters = new HashMap<>();
-
-		insertParameters.put("addressLabel", address.getAddressLabel());
-		insertParameters.put("addressLine1", address.getAddressLine1());
-		insertParameters.put("addressLine2", address.getAddressLine2());
-		insertParameters.put("district", address.getDistrict());
-		insertParameters.put("city", address.getCity());
-		insertParameters.put("region", address.getRegion());
-		insertParameters.put("zipCode", address.getZipCode());
-		insertParameters.put("deliveryInstructions", address.getDeliveryInstructions());
-		insertParameters.put("geoLocationX", address.getGeoLocationX());
-		insertParameters.put("geoLocationY", address.getGeoLocationY());
-		insertParameters.put("isDefault", address.getIsDefault());
-		insertParameters.put("profileId", profileId);
-
-		int result = this.sqlSession.insert("insertAddress", insertParameters);
+		address.setProfileId(profileId);
+		int result = this.sqlSession.insert("insertAddress", address);
 		return 1 == result;
 	}
 }

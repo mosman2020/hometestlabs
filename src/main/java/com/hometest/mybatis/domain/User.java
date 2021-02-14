@@ -67,8 +67,6 @@ public class User extends Audit implements Serializable{
 	@Valid
 	private Profile profile;
 
-	private Long profileId;
-	
 	private Set<Role> roles = new HashSet<>();
 	
 	private boolean mobileVerified;

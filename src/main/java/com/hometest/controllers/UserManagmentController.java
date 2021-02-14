@@ -148,7 +148,7 @@ public class UserManagmentController {
 	    		.body(result).build();
 	    return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-	
+	/*
 	@PostMapping(value = "/updateUserProfile")
 //	@Validated(OnCreate.class)
 	public ResponseEntity<Response> updateUserProfile(@RequestBody Request<Profile> request, HttpServletRequest httpRequest) {
@@ -164,7 +164,7 @@ public class UserManagmentController {
 	    		.body(userService.updateUserProfile(request.getBody())).build();
 	        return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-	
+	*/
 	@PostMapping(value = "/changeUserMobile")
 //	@Validated(OnCreate.class)
 	public ResponseEntity<Response> changeUserMobile(@RequestBody Request<ChangeMobileRequest> request, HttpServletRequest httpRequest) {

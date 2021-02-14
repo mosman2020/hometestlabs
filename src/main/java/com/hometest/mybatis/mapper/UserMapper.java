@@ -25,7 +25,7 @@ public interface UserMapper {
 	boolean updateUserLoginDetails(User user);
 	boolean updateOtpRetrycount(Long userid);
 	
-	boolean updateUserProfile(Profile profile, Long userId);
+	boolean updateUserProfile(Profile profile);
 	boolean changeUserPassword(ChangePassword changepassword);
 	
 	int createUser(User user);

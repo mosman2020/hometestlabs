@@ -45,17 +45,22 @@ public class UsersController {
 	AuthenticationService authenticationService;
 	
 	private Logger logger = LoggerFactory.getLogger(UsersController.class);
-	
+
+
+	private void assertLoggedUserIsTheSame(Long id) {
+		User user = authenticationService.getUser();
+		if(id !=user.getUserId()) {
+			throw new InsufficientAuthenticationException(ErrorCodes.INSUFFICIENT_PRIVILEGES);
+		}
+	}
+
 	@GetMapping(value = "/users/{id}")
 	public ResponseEntity<Response> getByUserId( @PathVariable Long id){
 		logger.info("userid : "+id);
-		User user = authenticationService.getUser();
-		if(id!=user.getUserId()) {
-			throw new InsufficientAuthenticationException(ErrorCodes.INSUFFICIENT_PRIVILEGES);
-		}
-		 return ResponseEntity.status(HttpStatus.OK).body(Response.builder().payload(userService.getByUserId(id)).build());
+		assertLoggedUserIsTheSame(id);
+		return ResponseEntity.status(HttpStatus.OK).body(Response.builder().payload(userService.getByUserId(id)).build());
 	}
-	
+
 	@GetMapping(value = "/users/exists/{username}")
 	public ResponseEntity isUserExists( @PathVariable String username){
 		logger.info("is user exists : "+username);
@@ -86,27 +91,35 @@ public class UsersController {
 		return entityId;
 	}
 
-	@PostMapping(value = "/users/changePassword")
+	@PostMapping(value = "/users/{id}/changePassword")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void changePassword(@RequestBody ChangePassword request){
+	public void changePassword(@PathVariable Long id, @RequestBody ChangePassword request){
+		logger.info("userid : "+id);
+		assertLoggedUserIsTheSame(id);
 		userService.changeUserPassword(request);
 	}
 
-	@PostMapping(value = "/users/updateprofile")
+	@PostMapping(value = "/users/{id}/updateprofile")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void updateProfile(@RequestBody Profile request){
+	public void updateProfile(@PathVariable Long id, @RequestBody Profile request){
+		logger.info("userid : "+id);
+		assertLoggedUserIsTheSame(id);
 		userService.updateUserProfile(request);
 	}
 
-	@PostMapping(value = "/users/changemobile")
+	@PostMapping(value = "/users/{id}/changemobile")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void changeMobileNumber(@RequestBody ChangeMobileRequest request){
+	public void changeMobileNumber(@PathVariable Long id, @RequestBody ChangeMobileRequest request){
+		logger.info("userid : "+id);
+		assertLoggedUserIsTheSame(id);
 		userService.changeUserMobile(request);
 	}
 
-	@PostMapping(value = "/users/changeemail")
+	@PostMapping(value = "/users/{id}/changeemail")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void changeEmail(@RequestBody Map<String, String> email){
+	public void changeEmail( @PathVariable Long id, @RequestBody Map<String, String> email){
+		logger.info("userid : "+id);
+		assertLoggedUserIsTheSame(id);
 		userService.changeUserEmail(email.get("email"));
 	}
 }
