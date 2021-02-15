@@ -1,5 +1,6 @@
 package com.hometest.service;
 
+import com.hometest.model.res.TokenData;
 import com.hometest.mybatis.domain.*;
 
 public interface UserService {
@@ -30,5 +31,5 @@ public interface UserService {
 
     void changeUserEmail(String email);
 
-    void logout(String token);
+    void logout(TokenData tokenData);
 }

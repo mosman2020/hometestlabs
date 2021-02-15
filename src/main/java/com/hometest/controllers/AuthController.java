@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.hometest.mybatis.dao.TokenDao;
+import com.hometest.mybatis.domain.TokenBlackList;
 import com.hometest.service.AuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +69,7 @@ public class AuthController {
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		TokenData token = userDetails.getTokenData();
 		token.setToken(jwtUtils.generateJwtToken(authentication));
+		userDetails.setToken(token);
 		return ResponseEntity.ok().body(Response.builder().payload(token).build());
 		
 	}
@@ -76,7 +78,7 @@ public class AuthController {
 	public  void logout(){
 		TokenData tokenData = authenticationService.getPrinciples().getTokenData();
 		if(tokenData != null ){
-			userService.logout(tokenData.getToken());
+			userService.logout(tokenData);
 		}
 	}
 }

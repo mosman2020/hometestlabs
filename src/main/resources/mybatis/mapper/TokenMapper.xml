@@ -32,7 +32,7 @@
     <insert id="insertToken">
         INSERT INTO token_black_list
             (token)
-        values (#{token})
+        values (#{token}, #{userId})
     </insert>
     <select id="findToken" resultMap="tokenBlackListMap">
         select * from token_black_list

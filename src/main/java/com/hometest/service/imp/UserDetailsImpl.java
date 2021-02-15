@@ -78,4 +78,8 @@ public class UserDetailsImpl implements UserDetails {
 	public TokenData getTokenData() {
 		return TokenData.builder().userid(user.getUserId()).build();
 	}
+
+	public void setToken(TokenData token){
+		this.token = token;
+	}
 }

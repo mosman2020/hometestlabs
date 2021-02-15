@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface TokenMapper {
     TokenBlackList findByToken(String token);
-    void insertToken(String token);
+    void insertToken(TokenBlackList token);
 }

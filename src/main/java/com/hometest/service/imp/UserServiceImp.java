@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.hometest.model.res.TokenData;
 import com.hometest.mybatis.dao.TokenDao;
 import com.hometest.mybatis.domain.*;
 import com.hometest.service.AuthenticationService;
@@ -219,7 +220,12 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public void logout(String token) {
+	public void logout(TokenData tokenData) {
+		TokenBlackList token = TokenBlackList
+									.builder()
+									.token(tokenData.getToken())
+									.user(authenticationService.getPrinciples().getUser())
+							  .build();
 		tokenDao.insertToken(token);
 	}
 
