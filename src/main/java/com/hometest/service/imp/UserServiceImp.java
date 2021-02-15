@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.hometest.mybatis.dao.TokenDao;
 import com.hometest.mybatis.domain.*;
 import com.hometest.service.AuthenticationService;
 import org.slf4j.Logger;
@@ -36,7 +37,10 @@ public class UserServiceImp implements UserService {
 
 	@Autowired
 	AuthenticationService authenticationService;
-	
+
+	@Autowired
+	TokenDao tokenDao;
+
 	
 	private Logger logger = LoggerFactory.getLogger(UserServiceImp.class);
 
@@ -212,6 +216,11 @@ public class UserServiceImp implements UserService {
 
 		// generate OTP
 		generateOtp(user.getUserId());
+	}
+
+	@Override
+	public void logout(String token) {
+		tokenDao.insertToken(token);
 	}
 
 	private void validateUsername(String userName){

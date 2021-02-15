@@ -29,4 +29,6 @@ public interface UserService {
     User signup(User request);
 
     void changeUserEmail(String email);
+
+    void logout(String token);
 }

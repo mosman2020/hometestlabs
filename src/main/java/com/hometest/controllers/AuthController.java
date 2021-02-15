@@ -51,9 +51,6 @@ public class AuthController {
 	JwtUtils jwtUtils;
 
 	@Autowired
-	TokenDao tokenDao;
-
-	@Autowired
 	AuthenticationService authenticationService;
 
 	private Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -79,7 +76,7 @@ public class AuthController {
 	public  void logout(){
 		TokenData tokenData = authenticationService.getPrinciples().getTokenData();
 		if(tokenData != null ){
-			tokenDao.insertToken(tokenData.getToken());
+			userService.logout(tokenData.getToken());
 		}
 	}
 }

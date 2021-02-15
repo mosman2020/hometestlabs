@@ -22,7 +22,10 @@
 
 <mapper namespace="com.hometest.mybatis.mapper.TokenMapper">
     <resultMap id="tokenBlackListMap" type="com.hometest.mybatis.domain.TokenBlackList">
+        <id property="id" column="id" />
         <result property="token" column="token" />
+        <association property="user" resultMap="userMap" />
+
     </resultMap>
 
 
