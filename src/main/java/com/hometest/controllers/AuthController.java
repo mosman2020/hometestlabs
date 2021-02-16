@@ -75,7 +75,10 @@ public class AuthController {
 	}
 
 	@PostMapping("/logout")
-	public  void logout(){
+	public  void logout(HttpServletRequest servletRequest){
+		String token = servletRequest.getHeader("Authorization");
+		logger.info("token = "+token);
+		// you need to split the Barer from the token
 		TokenData tokenData = authenticationService.getPrinciples().getTokenData();
 		if(tokenData != null ){
 			userService.logout(tokenData);
