@@ -1,7 +1,5 @@
 package com.hometest.model.res;
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

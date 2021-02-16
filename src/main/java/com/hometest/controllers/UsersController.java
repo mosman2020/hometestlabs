@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hometest.dto.EntityId;
 import com.hometest.model.res.Response;
 import com.hometest.model.res.TokenData;
 import com.hometest.mybatis.domain.ChangeMobileRequest;
 import com.hometest.mybatis.domain.ChangePassword;
+import com.hometest.mybatis.domain.LoginUser;
 import com.hometest.mybatis.domain.Profile;
 import com.hometest.mybatis.domain.User;
 import com.hometest.service.AuthenticationService;
@@ -84,11 +84,9 @@ public class UsersController {
 	}
 	@PostMapping(value = "/users/signup")
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public EntityId<Long> signup(@RequestBody User request){
-		EntityId<Long> entityId = new EntityId<Long>();
+	public ResponseEntity<Response> signup(@RequestBody User request){
 		User user = userService.signup(request);
-		entityId.setId(user.getUserId());
-		return entityId;
+		return ResponseEntity.status(HttpStatus.CREATED).body(Response.builder().payload(TokenData.builder().userid(user.getUserId()).build()).build());
 	}
 
 	@PostMapping(value = "/users/{id}/changePassword")
@@ -108,18 +106,19 @@ public class UsersController {
 	}
 
 	@PostMapping(value = "/users/{id}/changemobile")
-	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void changeMobileNumber(@PathVariable Long id, @RequestBody ChangeMobileRequest request){
+	@ResponseStatus(value = HttpStatus.OK)
+	public ResponseEntity<Response> changeMobileNumber(@PathVariable Long id, @RequestBody ChangeMobileRequest request){
 		logger.info("userid : "+id);
 		assertLoggedUserIsTheSame(id);
-		userService.changeUserMobile(request);
+		return ResponseEntity.status(HttpStatus.OK).body(Response.builder().payload(userService.changeUserMobile(request)).build());
 	}
 
 	@PostMapping(value = "/users/{id}/changeemail")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void changeEmail( @PathVariable Long id, @RequestBody Map<String, String> email){
+	public void changeEmail( @PathVariable Long id, @RequestBody LoginUser user){
+		// may be it needs to adjust the validation group to validate username only and bypass password and other fields validation .. pls. check
 		logger.info("userid : "+id);
 		assertLoggedUserIsTheSame(id);
-		userService.changeUserEmail(email.get("email"));
+		userService.changeUserEmail(user.getUserName());
 	}
 }
