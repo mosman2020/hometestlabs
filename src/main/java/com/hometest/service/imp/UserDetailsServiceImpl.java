@@ -1,5 +1,7 @@
 package com.hometest.service.imp;
 
+import com.hometest.mybatis.dao.UserDao;
+import com.hometest.mybatis.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import com.hometest.enums.UserStatus;
-import com.hometest.mybatis.dao.UserDao;
-import com.hometest.mybatis.domain.User;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

@@ -10,19 +10,15 @@ package com.hometest.validation.annotation;
  * @Pacom.hometest.validators
  * @4:40:49 PM
  */
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+
+import com.hometest.utils.ErrorCodes;
+import com.hometest.validation.validators.EnumValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.ReportAsSingleViolation;
 import javax.validation.constraints.NotNull;
-
-import com.hometest.utils.ErrorCodes;
-import com.hometest.validation.validators.EnumValidator;
+import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = EnumValidator.class)

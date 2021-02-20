@@ -3,12 +3,11 @@
  */
 package com.hometest.jobs;
 
+import com.hometest.mybatis.dao.UserDao;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.hometest.mybatis.dao.UserDao;
 
 /**
  * @author hometest

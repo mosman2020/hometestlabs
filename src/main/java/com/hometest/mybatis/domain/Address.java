@@ -12,7 +12,7 @@ import java.io.Serializable;
 @JsonInclude(value=JsonInclude.Include.NON_EMPTY, content=JsonInclude.Include.NON_NULL)
 @Data
 
-public class Address  extends Audit implements Serializable {
+    public class Address  extends Audit implements Serializable {
 
     private static final long serialVersionUID = -4107565211226801900L;
 

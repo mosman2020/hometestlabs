@@ -3,12 +3,11 @@
  */
 package com.hometest.mybatis.dao;
 
+import com.hometest.mybatis.domain.MessageDump;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import com.hometest.mybatis.domain.MessageDump;
 
 /**
  * @author moosman

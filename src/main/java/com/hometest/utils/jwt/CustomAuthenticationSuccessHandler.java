@@ -3,16 +3,15 @@
  */
 package com.hometest.utils.jwt;
 
+import com.hometest.mybatis.domain.LoginUser;
+import com.hometest.mybatis.domain.User;
+import com.hometest.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
-
-import com.hometest.mybatis.domain.LoginUser;
-import com.hometest.mybatis.domain.User;
-import com.hometest.service.UserService;
 
 
 /**

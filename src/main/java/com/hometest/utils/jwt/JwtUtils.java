@@ -1,19 +1,19 @@
 package com.hometest.utils.jwt;
 
-import java.util.Date;
-
 import com.hometest.mybatis.dao.TokenDao;
 import com.hometest.mybatis.domain.TokenBlackList;
+import com.hometest.service.imp.UserDetailsImpl;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
-import com.hometest.service.imp.UserDetailsImpl;
-
-import io.jsonwebtoken.*;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @Component
 public class JwtUtils {
@@ -67,4 +67,16 @@ public class JwtUtils {
 		TokenBlackList tokenBlackList = tokenDao.findByToken(jwt);
 		return tokenBlackList != null && tokenBlackList.getToken().equals(jwt);
 	}
+
+
+	public String parseJwt(HttpServletRequest request) {
+		String headerAuth = request.getHeader("Authorization");
+
+		if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
+			return headerAuth.substring(7, headerAuth.length());
+		}
+
+		return null;
+	}
+
 }

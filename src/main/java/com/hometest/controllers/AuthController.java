@@ -1,14 +1,17 @@
 package com.hometest.controllers;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import com.hometest.mybatis.dao.TokenDao;
-import com.hometest.mybatis.domain.TokenBlackList;
+import com.hometest.model.req.LoginParam;
+import com.hometest.model.res.Response;
+import com.hometest.model.res.TokenData;
 import com.hometest.service.AuthenticationService;
+import com.hometest.service.UserService;
+import com.hometest.service.imp.UserDetailsImpl;
+import com.hometest.utils.jwt.JwtUtils;
+import com.hometest.validation.groups.OnLogin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,32 +19,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.hometest.model.req.LoginParam;
-import com.hometest.model.res.Response;
-import com.hometest.model.res.TokenData;
-import com.hometest.service.MessageService;
-import com.hometest.service.UserService;
-import com.hometest.service.imp.UserDetailsImpl;
-import com.hometest.utils.jwt.JwtUtils;
-import com.hometest.validation.groups.OnLogin;
+import javax.servlet.http.HttpServletRequest;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping(UsersController.API_END_POINT)
 public class AuthController {
 	@Autowired
 	AuthenticationManager authenticationManager;
 
-	@Autowired
-	MessageService messageService;
-		
 	@Autowired
 	UserService userService;
 	
@@ -75,13 +64,12 @@ public class AuthController {
 	}
 
 	@PostMapping("/logout")
-	public  void logout(HttpServletRequest servletRequest){
-		String token = servletRequest.getHeader("Authorization");
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public  void logout(HttpServletRequest request){
+		String token = jwtUtils.parseJwt(request);
 		logger.info("token = "+token);
-		// you need to split the Barer from the token
-		TokenData tokenData = authenticationService.getPrinciples().getTokenData();
-		if(tokenData != null ){
-			userService.logout(tokenData);
+		if(token != null){
+			userService.logout(token);
 		}
 	}
 }

@@ -3,14 +3,16 @@
  */
 package com.hometest.service.imp;
 
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import com.hometest.model.res.TokenData;
+import com.hometest.enums.ChangeMobileStatus;
+import com.hometest.enums.ChangeMobileType;
+import com.hometest.enums.UserStatus;
+import com.hometest.exceptionhandling.exception.BusinessException;
 import com.hometest.mybatis.dao.TokenDao;
+import com.hometest.mybatis.dao.UserDao;
 import com.hometest.mybatis.domain.*;
 import com.hometest.service.AuthenticationService;
+import com.hometest.service.UserService;
+import com.hometest.utils.ErrorCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.hometest.enums.ChangeMobileStatus;
-import com.hometest.enums.ChangeMobileType;
-import com.hometest.enums.UserStatus;
-import com.hometest.exceptionhandling.exception.BusinessException;
-import com.hometest.mybatis.dao.UserDao;
-import com.hometest.service.UserService;
-import com.hometest.utils.ErrorCodes;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author moosman
@@ -101,7 +99,7 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public boolean verifyUser(Long userid,String otp) {
+	public void verifyUser(Long userid,String otp) {
 
 		logger.info("verify user");
 		UserPassword password = userDao.getUserValidOtp(userid);
@@ -130,7 +128,10 @@ public class UserServiceImp implements UserService {
 		}else {
 			b = false;
 		}
-		return b;
+		if(!b){
+			//TODO check again
+			throw new BusinessException(ErrorCodes.USER_NOT_VERIFIED);
+		}
 	}
 
 	@Override
@@ -220,13 +221,13 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public void logout(TokenData tokenData) {
-		TokenBlackList token = TokenBlackList
+	public void logout(String token) {
+		TokenBlackList tokenBlackList = TokenBlackList
 									.builder()
-									.token(tokenData.getToken())
+									.token(token)
 									.user(authenticationService.getPrinciples().getUser())
 							  .build();
-		tokenDao.insertToken(token);
+		tokenDao.insertToken(tokenBlackList);
 	}
 
 	private void validateUsername(String userName){

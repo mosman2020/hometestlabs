@@ -3,17 +3,6 @@
  */
 package com.hometest.mybatis.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
-import javax.validation.groups.Default;
-import javax.validation.constraints.Pattern;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,9 +11,16 @@ import com.hometest.enums.Title;
 import com.hometest.utils.ErrorCodes;
 import com.hometest.validation.annotation.ValidEnum;
 import com.hometest.validation.groups.OnCreate;
-import com.hometest.validation.groups.OnUpdate;
-
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import javax.validation.groups.Default;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author moosman

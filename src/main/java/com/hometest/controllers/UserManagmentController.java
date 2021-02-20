@@ -3,32 +3,27 @@
  */
 package com.hometest.controllers;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.hometest.mybatis.domain.ChangePassword;
 import com.hometest.mybatis.domain.ChangeMobileRequest;
+import com.hometest.mybatis.domain.ChangePassword;
 import com.hometest.mybatis.domain.LoginUser;
-import com.hometest.mybatis.domain.Profile;
-import com.hometest.mybatis.domain.User;
 import com.hometest.service.MessageService;
 import com.hometest.service.UserService;
 import com.hometest.utils.ErrorCodes;
 import com.hometest.utils.payload.request.Request;
 import com.hometest.utils.payload.response.Response;
 import com.hometest.utils.payload.response.ResponseHeader;
-import com.hometest.validation.groups.OnCreate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author hometest

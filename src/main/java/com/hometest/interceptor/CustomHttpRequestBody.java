@@ -1,14 +1,13 @@
 
 package com.hometest.interceptor;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.stream.Collectors;
-
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class CustomHttpRequestBody extends HttpServletRequestWrapper {
 	private final String body;

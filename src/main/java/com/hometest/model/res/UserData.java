@@ -1,17 +1,13 @@
 package com.hometest.model.res;
 
-import java.util.Date;
-
-import com.hometest.enums.Language;
-import com.hometest.enums.UserStatus;
-import com.hometest.enums.UserType;
 import com.hometest.mybatis.domain.Profile;
 import com.hometest.mybatis.domain.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @Builder

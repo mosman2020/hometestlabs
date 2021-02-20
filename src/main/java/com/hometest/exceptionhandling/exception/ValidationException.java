@@ -3,14 +3,11 @@
  */
 package com.hometest.exceptionhandling.exception;
 
-import java.util.Set;
+import com.hometest.utils.ErrorCodes;
+import lombok.Data;
 
 import javax.validation.ConstraintViolation;
-
-import com.hometest.utils.ErrorCodes;
-import com.hometest.utils.payload.request.Request;
-
-import lombok.Data;
+import java.util.Set;
 
 /**
  * @author mosman

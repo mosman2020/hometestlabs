@@ -1,6 +1,5 @@
 package com.hometest.mybatis.dao;
 
-import com.hometest.model.res.TokenData;
 import com.hometest.mybatis.domain.TokenBlackList;
 import com.hometest.mybatis.mapper.TokenMapper;
 import org.apache.ibatis.session.SqlSession;

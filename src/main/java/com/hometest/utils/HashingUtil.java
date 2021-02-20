@@ -1,8 +1,8 @@
 package com.hometest.utils;
 
-import java.security.MessageDigest;
-
 import org.springframework.stereotype.Service;
+
+import java.security.MessageDigest;
 
 @Service
 public class HashingUtil {

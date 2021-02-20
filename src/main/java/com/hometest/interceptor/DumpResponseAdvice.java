@@ -3,23 +3,16 @@
  */
 package com.hometest.interceptor;
 
-import java.util.Date;
-
+import com.hometest.service.MessageDumpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-
-import com.hometest.mybatis.domain.MessageDump;
-import com.hometest.service.MessageDumpService;
-import com.hometest.utils.payload.response.Response;
-import com.hometest.utils.payload.response.ResponseHeader;
 
 /**
  * @author moosman

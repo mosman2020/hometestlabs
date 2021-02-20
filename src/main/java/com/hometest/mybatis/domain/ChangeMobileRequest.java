@@ -1,15 +1,10 @@
 package com.hometest.mybatis.domain;
 
+import com.hometest.utils.ErrorCodes;
+import lombok.*;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
-import com.hometest.utils.ErrorCodes;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * @author mosman

@@ -3,12 +3,11 @@
  */
 package com.hometest.mybatis.domain;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author moosman

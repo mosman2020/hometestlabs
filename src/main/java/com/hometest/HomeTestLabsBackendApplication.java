@@ -1,8 +1,6 @@
 package com.hometest;
 
-import javax.validation.MessageInterpolator;
-import javax.validation.Validator;
-
+import com.hometest.validation.CustomMessageInterpolator;
 import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +13,8 @@ import org.springframework.validation.beanvalidation.MessageSourceResourceBundle
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.hometest.validation.CustomMessageInterpolator;
+import javax.validation.MessageInterpolator;
+import javax.validation.Validator;
 
 @EnableWebMvc
 @SpringBootApplication

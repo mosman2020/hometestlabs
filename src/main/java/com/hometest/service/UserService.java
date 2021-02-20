@@ -1,6 +1,5 @@
 package com.hometest.service;
 
-import com.hometest.model.res.TokenData;
 import com.hometest.mybatis.domain.*;
 
 public interface UserService {
@@ -13,7 +12,7 @@ public interface UserService {
 
     UserPassword generateOtp(Long userid);
 
-    boolean verifyUser(Long userid, String otp);
+    void verifyUser(Long userid, String otp);
 
     boolean updateUserSuccessLoginDetails(User user);
 
@@ -31,5 +30,6 @@ public interface UserService {
 
     void changeUserEmail(String email);
 
-    void logout(TokenData tokenData);
+    void logout(String token);
+
 }

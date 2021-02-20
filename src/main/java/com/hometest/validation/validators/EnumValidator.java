@@ -10,17 +10,16 @@ package com.hometest.validation.validators;
  * @Pacom.hometest.validators
  * @4:41:49 PM
  */
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
+import com.hometest.validation.annotation.ValidEnum;
 import org.hibernate.validator.constraintvalidation.HibernateConstraintValidatorContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hometest.validation.annotation.ValidEnum;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnumValidator implements ConstraintValidator<ValidEnum, String> {
 

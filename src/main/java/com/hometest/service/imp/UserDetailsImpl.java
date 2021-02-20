@@ -1,16 +1,15 @@
 package com.hometest.service.imp;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.stream.Collectors;
-
+import com.hometest.enums.UserStatus;
+import com.hometest.model.res.TokenData;
+import com.hometest.mybatis.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.hometest.enums.UserStatus;
-import com.hometest.model.res.TokenData;
-import com.hometest.mybatis.domain.User;
+import java.util.Collection;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 
 public class UserDetailsImpl implements UserDetails {

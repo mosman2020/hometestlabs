@@ -3,11 +3,8 @@
  */
 package com.hometest.mybatis.dao;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.hometest.mybatis.domain.*;
+import com.hometest.mybatis.mapper.UserMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +14,9 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hometest.mybatis.mapper.UserMapper;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author moosman

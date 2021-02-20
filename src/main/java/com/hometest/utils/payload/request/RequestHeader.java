@@ -3,16 +3,6 @@
  */
 package com.hometest.utils.payload.request;
 
-import java.util.Date;
-import java.util.UUID;
-
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Currency;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hometest.enums.Channel;
@@ -20,11 +10,14 @@ import com.hometest.enums.Language;
 import com.hometest.utils.ErrorCodes;
 import com.hometest.validation.annotation.DateFormat;
 import com.hometest.validation.annotation.ValidEnum;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author moosman

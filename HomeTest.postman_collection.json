@@ -126,6 +126,39 @@
 					"response": []
 				},
 				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMzgyNjIwNCwiZXhwIjoxNjE0NjkwMjA0fQ.7rK8MCC6pLFehPq4yhEethPTeZ6aZBV7f328U4JKnrhbXC8oKdHkFLE6KjUycb55m4HheIGEaGXkiMaPfZ9Gqw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8095/hometestlabs/api/v1/users/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8095",
+							"path": [
+								"hometestlabs",
+								"api",
+								"v1",
+								"users",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "users/changeemail",
 					"request": {
 						"auth": {
@@ -206,6 +239,85 @@
 								"users",
 								"{id}",
 								"changemobile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Get Categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMzgyNjIwNCwiZXhwIjoxNjE0NjkwMjA0fQ.7rK8MCC6pLFehPq4yhEethPTeZ6aZBV7f328U4JKnrhbXC8oKdHkFLE6KjUycb55m4HheIGEaGXkiMaPfZ9Gqw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8095/hometestlabs/api/v1/products/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8095",
+							"path": [
+								"hometestlabs",
+								"api",
+								"v1",
+								"products",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NtYW4xMEBob3RtYWlsLmNvbSIsImlhdCI6MTYxMzgyNjIwNCwiZXhwIjoxNjE0NjkwMjA0fQ.7rK8MCC6pLFehPq4yhEethPTeZ6aZBV7f328U4JKnrhbXC8oKdHkFLE6KjUycb55m4HheIGEaGXkiMaPfZ9Gqw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"catId\": null,\r\n    \"page\":{\r\n        \"limit\":10,\r\n        \"offset\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8095/hometestlabs/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8095",
+							"path": [
+								"hometestlabs",
+								"api",
+								"v1",
+								"products"
 							]
 						}
 					},

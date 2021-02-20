@@ -1,10 +1,8 @@
 package com.hometest.exceptionhandling.exception;
 
 import com.hometest.utils.ErrorCodes;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data

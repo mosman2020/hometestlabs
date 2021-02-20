@@ -3,19 +3,16 @@
  */
 package com.hometest.mybatis.domain;
 
-import java.io.Serializable;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hometest.utils.ErrorCodes;
 import com.hometest.validation.groups.OnLogin;
 import com.hometest.validation.groups.OnValidateOtp;
-
 import lombok.Builder;
 import lombok.Data;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @author mosman

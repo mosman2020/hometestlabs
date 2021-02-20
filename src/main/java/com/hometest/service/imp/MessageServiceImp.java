@@ -3,13 +3,12 @@
  */
 package com.hometest.service.imp;
 
-import java.util.Locale;
-
+import com.hometest.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import com.hometest.service.MessageService;
+import java.util.Locale;
 
 /**
  * @author moosman

@@ -3,13 +3,12 @@
  */
 package com.hometest.validation;
 
-import java.util.Locale;
-
-import javax.validation.MessageInterpolator;
-
 import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.validation.MessageInterpolator;
+import java.util.Locale;
 
 /**
  * @author mosman

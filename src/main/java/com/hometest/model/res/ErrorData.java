@@ -3,15 +3,14 @@
  */
 package com.hometest.model.res;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonRootName;
-
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author hometest

@@ -1,16 +1,12 @@
 package com.hometest.exceptionhandling.handler;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-
+import com.google.common.base.Throwables;
+import com.hometest.exceptionhandling.exception.BusinessException;
+import com.hometest.exceptionhandling.exception.ValidationException;
+import com.hometest.model.res.Error;
+import com.hometest.model.res.ErrorData;
+import com.hometest.service.MessageService;
+import com.hometest.utils.ErrorCodes;
 import org.apache.ibatis.session.SqlSessionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,29 +16,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.google.common.base.Throwables;
-import com.hometest.enums.Language;
-import com.hometest.exceptionhandling.exception.BusinessException;
-import com.hometest.exceptionhandling.exception.ValidationException;
-import com.hometest.interceptor.CustomHttpRequestBody;
-import com.hometest.model.res.ErrorData;
-import com.hometest.model.res.Error;
-import com.hometest.service.MessageService;
-import com.hometest.utils.ErrorCodes;
-import com.hometest.utils.JsonUtils;
-import com.hometest.utils.payload.request.Request;
-import com.hometest.utils.payload.request.RequestHeader;
-import com.hometest.utils.payload.response.Response;
-import com.hometest.utils.payload.response.ResponseHeader;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @ControllerAdvice

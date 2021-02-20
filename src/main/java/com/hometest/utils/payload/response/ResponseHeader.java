@@ -3,13 +3,12 @@
  */
 package com.hometest.utils.payload.response;
 
-import java.util.Date;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.Date;
+import java.util.Map;
 
 /**
  * @author moosman

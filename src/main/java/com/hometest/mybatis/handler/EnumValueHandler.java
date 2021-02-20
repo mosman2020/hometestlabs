@@ -3,6 +3,13 @@
  */
 package com.hometest.mybatis.handler;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hometest.enums.Gender;
+import com.hometest.enums.UserStatus;
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
+
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,14 +17,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.ibatis.type.BaseTypeHandler;
-import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedTypes;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.hometest.enums.Gender;
-import com.hometest.enums.UserStatus;
 
 /**
  * @author moosman
