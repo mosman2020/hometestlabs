@@ -25,10 +25,14 @@ import java.util.Map;
 @Component
 public class UserDao implements UserMapper{
 
-	@Autowired
-	private SqlSession sqlSession;
+	private final SqlSession sqlSession;
 
 	private Logger logger = LoggerFactory.getLogger(UserDao.class);
+
+	@Autowired
+	public UserDao(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
 
 	@Override
 	public User getUserByUsername(String username) {

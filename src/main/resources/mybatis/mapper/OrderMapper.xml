@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2019 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hometest.mybatis.mapper.OrderMapper">
+    <resultMap id="orderMap" type="com.hometest.mybatis.domain.Order">
+        <id property="id" column="id" />
+        <result property="orderNumber" column="order_number" />
+        <result property="customerId" column="customer_id" />
+        <result property="orderDate" column="order_date" />
+        <result property="offerId" column="offer_id" />
+        <result property="packageId" column="package_id" />
+        <result property="amount" column="amount" />
+        <result property="discountValue" column="discount_value" />
+        <result property="netAmount" column="net_amount" />
+        <result property="paymentStatus" column="payment_status" />
+        <result property="paymentType" column="payment_type" />
+        <result property="paidAmount" column="paid_amount" />
+        <result property="proposedDate" column="proposed_date" />
+        <result property="proposedTime" column="proposed_time" />
+        <result property="expectedDelivery" column="expected_delivery" />
+        <result property="status" column="status" />
+        <result property="assignedBranchId" column="assigned_branch_id" />
+        <result property="assignedBranchReceivingDate" column="assigned_branch_receiving_date" />
+        <result property="assignedTechnicianId" column="assigned_technician_id" />
+        <result property="sampleCollectionDate" column="sample_collection_date" />
+        <result property="customerDeliveryDate" column="customer_delivery_date" />
+        <result property="createdDate" column="created_date" />
+        <result property="createdBy" column="created_by" />
+        <result property="updatedBy" column="updated_by" />
+        <result property="updatedDate" column="updated_date" />
+        <result property="isDeleted" column="is_deleted" />
+        <result property="deletedDate" column="deleted_date" />
+    </resultMap>
+    <resultMap id="orderProductMap" type="com.hometest.mybatis.domain.OrderProduct">
+        <id property="id" column="id" />
+        <result property="productId" column="product_id" />
+        <result property="orderId" column="order_id" />
+    </resultMap>
+
+</mapper>

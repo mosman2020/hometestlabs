@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping(ProductController.API_END_POINT)
 public class ProductController {
 
-    final static String API_END_POINT = WebConfig.API_END_POINT + "/products";
+    final static protected String API_END_POINT = WebConfig.API_END_POINT + "/products";
 
     @Autowired
     ProductService productService;

@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(UsersController.API_END_POINT)
 public class UsersController {
 
-	final static String API_END_POINT = WebConfig.API_END_POINT + "/users";
+	final static protected String API_END_POINT = WebConfig.API_END_POINT + "/users";
 
 	@Autowired
 	UserService userService;
@@ -38,17 +38,10 @@ public class UsersController {
 	private Logger logger = LoggerFactory.getLogger(UsersController.class);
 
 
-	private void assertLoggedUserIsTheSame(Long id) {
-		User user = authenticationService.getUser();
-		if(id !=user.getUserId()) {
-			throw new InsufficientAuthenticationException(ErrorCodes.INSUFFICIENT_PRIVILEGES);
-		}
-	}
-
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Response> getByUserId( @PathVariable Long id){
 		logger.info("userid : "+id);
-		assertLoggedUserIsTheSame(id);
+		userService.assertLoggedUserIsTheSame(id);
 		return ResponseEntity.status(HttpStatus.OK).body(Response.builder().payload(userService.getByUserId(id)).build());
 	}
 
@@ -83,7 +76,7 @@ public class UsersController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public void changePassword(@PathVariable Long id, @RequestBody ChangePassword request){
 		logger.info("userid : "+id);
-		assertLoggedUserIsTheSame(id);
+		userService.assertLoggedUserIsTheSame(id);
 		userService.changeUserPassword(request);
 	}
 
@@ -91,7 +84,7 @@ public class UsersController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public void updateProfile(@PathVariable Long id, @RequestBody Profile request){
 		logger.info("userid : "+id);
-		assertLoggedUserIsTheSame(id);
+		userService.assertLoggedUserIsTheSame(id);
 		userService.updateUserProfile(request);
 	}
 
@@ -99,7 +92,7 @@ public class UsersController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public ResponseEntity<Response> changeMobileNumber(@PathVariable Long id, @RequestBody ChangeMobileRequest request){
 		logger.info("userid : "+id);
-		assertLoggedUserIsTheSame(id);
+		userService.assertLoggedUserIsTheSame(id);
 		return ResponseEntity.status(HttpStatus.OK).body(Response.builder().payload(userService.changeUserMobile(request)).build());
 	}
 
@@ -108,7 +101,7 @@ public class UsersController {
 	public void changeEmail( @PathVariable Long id, @RequestBody LoginUser user){
 		// may be it needs to adjust the validation group to validate username only and bypass password and other fields validation .. pls. check
 		logger.info("userid : "+id);
-		assertLoggedUserIsTheSame(id);
+		userService.assertLoggedUserIsTheSame(id);
 		userService.changeUserEmail(user.getUserName());
 	}
 }

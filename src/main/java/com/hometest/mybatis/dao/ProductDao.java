@@ -9,7 +9,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -34,5 +36,12 @@ public class ProductDao implements ProductMapper {
                         .page(request.getPage())
                         .content(content)
                     .build();
+    }
+
+    @Override
+    public Product findById(Long productId) {
+        Map<String, Long> params = new HashMap<>();
+        params.put("productId", productId);
+        return sqlSession.selectOne("findProductById", params);
     }
 }

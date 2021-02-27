@@ -103,8 +103,12 @@ public class ErrorCodes {
 		// LIST OF ORDER MANAGEMENT SERVICE ERRORS (E300200)
 		public static final String NON_PAID_ORDER = "E300201";
 		public static final String PAYMENT_FAILED = "E300202";
-	
-	
-	
-	
+
+
+		// Cart codes
+		public static final String INVALID_PRODUCT = "E400101";
+		public static final String INVALID_QTY = "E400102";
+
+
+
 }

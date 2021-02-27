@@ -16,6 +16,7 @@ import com.hometest.utils.ErrorCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,17 +32,21 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class UserServiceImp implements UserService {
 
-	@Autowired
-	UserDao userDao;
+	final private UserDao userDao;
 
-	@Autowired
-	AuthenticationService authenticationService;
+	final private AuthenticationService authenticationService;
 
-	@Autowired
-	TokenDao tokenDao;
+	final private TokenDao tokenDao;
 
 	
 	private Logger logger = LoggerFactory.getLogger(UserServiceImp.class);
+
+	@Autowired
+	public UserServiceImp(UserDao userDao, AuthenticationService authenticationService, TokenDao tokenDao) {
+		this.userDao = userDao;
+		this.authenticationService = authenticationService;
+		this.tokenDao = tokenDao;
+	}
 
 	@Override
 	public User getByUsername(LoginUser loginUser) {
@@ -228,6 +233,14 @@ public class UserServiceImp implements UserService {
 									.user(authenticationService.getPrinciples().getUser())
 							  .build();
 		tokenDao.insertToken(tokenBlackList);
+	}
+
+	@Override
+	public void assertLoggedUserIsTheSame(Long id) {
+		User user = authenticationService.getUser();
+		if(id !=user.getUserId()) {
+			throw new InsufficientAuthenticationException(ErrorCodes.INSUFFICIENT_PRIVILEGES);
+		}
 	}
 
 	private void validateUsername(String userName){

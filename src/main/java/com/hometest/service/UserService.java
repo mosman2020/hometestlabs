@@ -32,4 +32,5 @@ public interface UserService {
 
     void logout(String token);
 
+    void assertLoggedUserIsTheSame(Long id);
 }

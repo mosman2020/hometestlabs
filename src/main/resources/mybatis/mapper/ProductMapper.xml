@@ -54,6 +54,12 @@
             FROM categories
     </select>
 
+    <select id="findProductById" resultMap="productMap">
+        SELECT *
+        FROM Products
+        WHERE id = #{productId}
+    </select>
+
     <select id="findProductByCategory" resultMap="productMap">
         SELECT
             p.*
